@@ -17,14 +17,14 @@ public class PedidoRepository : IPedidoRepository
     public async Task<Pedido?> ObterPorIdAsync(int id)
     {
         return await _context.Pedidos
-            .Include(p => p.ItensPedido)
+            .Include(p => p.ItensPedidoList)
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<IEnumerable<Pedido>> ObterTodosAsync()
     {
         return await _context.Pedidos
-            .Include(p => p.ItensPedido)
+            .Include(p => p.ItensPedidoList)
             .OrderByDescending(p => p.DataCriacao)
             .ToListAsync();
     }
