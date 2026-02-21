@@ -54,9 +54,10 @@ Aplicação completa com backend em **.NET (API REST)** e frontend em **React** 
 
 | Componente | Status | Detalhes |
 |-----------|--------|---------|
-| **Entity Framework Core** | ✅ Concluído | DbContext configurado |
-| **Migrations** | ⏳ Próximo | Migration inicial para SQL Server |
-| **SQL Server/InMemory** | ✅ Concluído | Suporte para ambos |
+| **Entity Framework Core** | ✅ Concluído | DbContext configurado com suporte a SQL Server e InMemory |
+| **Migrations** | ✅ Concluído | Migration inicial `InitialCreate` com tabelas Pedidos e ItensPedido |
+| **DesignTimeDbContextFactory** | ✅ Concluído | Factory para suporte a migrações em tempo de design |
+| **SQL Server/InMemory** | ✅ Concluído | Suporte para ambos com tratamento condicional em Program.cs |
 
 #### **6. Documentação API**
 
@@ -203,7 +204,7 @@ cd CrudPedidos
 dotnet restore
 
 # Aplicar migrations
-dotnet ef database update
+dotnet ef database update -p CrudPedidos.Infrastructure -s CrudPedidos.API
 
 # Executar a API
 dotnet run --project CrudPedidos.API
@@ -211,6 +212,16 @@ dotnet run --project CrudPedidos.API
 
 **URL da API**: `https://localhost:7000`  
 **Swagger**: `https://localhost:7000/swagger`
+
+#### Criar Novas Migrations
+
+```bash
+# Adicionar nova migration
+dotnet ef migrations add NomeDaMigration -p CrudPedidos.Infrastructure -s CrudPedidos.API
+
+# Remover última migration
+dotnet ef migrations remove -p CrudPedidos.Infrastructure -s CrudPedidos.API
+```
 
 ### 3. Configurar Frontend
 
@@ -245,6 +256,47 @@ dotnet test
 # Apenas testes do CrudPedidos.Tests
 dotnet test CrudPedidos.Tests
 ```
+
+---
+
+## 🗄️ BANCO DE DADOS
+
+### Schema - Tabelas
+
+#### **Tabela: Pedidos**
+
+| Coluna | Tipo | Restrições | Descrição |
+|--------|------|-----------|-----------|
+| **Id** | int | PK, Auto-increment | Identificador único do pedido |
+| **NomeCliente** | nvarchar(255) | NOT NULL | Nome do cliente |
+| **EmailCliente** | nvarchar(255) | NOT NULL | Email do cliente |
+| **Pago** | bit | NOT NULL, DEFAULT: 0 | Status de pagamento |
+| **ValorTotal** | decimal(18,2) | NOT NULL | Valor total do pedido (soma dos itens) |
+| **DataCriacao** | datetime2 | NOT NULL, DEFAULT: GETUTCDATE() | Data de criação do pedido |
+| **DataAtualizacao** | datetime2 | NULL | Data da última atualização |
+
+#### **Tabela: ItensPedido**
+
+| Coluna | Tipo | Restrições | Descrição |
+|--------|------|-----------|-----------|
+| **Id** | int | PK, Auto-increment | Identificador único do item |
+| **IdProduto** | int | NOT NULL | ID externo do produto |
+| **NomeProduto** | nvarchar(255) | NOT NULL | Nome do produto |
+| **ValorUnitario** | decimal(18,2) | NOT NULL | Preço unitário do produto |
+| **Quantidade** | int | NOT NULL | Quantidade solicitada |
+| **PedidoId** | int | NOT NULL, FK → Pedidos.Id | Chave estrangeira para Pedido |
+
+### Relacionamento
+
+- **One-to-Many**: Um Pedido pode ter múltiplos ItensPedido
+- **Delete Cascade**: Ao deletar um Pedido, todos seus itens são removidos automaticamente
+
+### Migrations Aplicadas
+
+#### ✅ InitialCreate (20260221180758)
+- Criação das tabelas `Pedidos` e `ItensPedido`
+- Configuração de chaves primárias e estrangeiras
+- Índices para melhor desempenho
 
 ---
 

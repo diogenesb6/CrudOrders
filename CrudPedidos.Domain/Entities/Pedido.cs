@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CrudPedidos.Domain.Entities;
 
 public class Pedido
@@ -11,7 +13,16 @@ public class Pedido
     public DateTime? DataAtualizacao { get; set; }
 
     private List<ItemPedido> _itensPedido = new();
+
+    [NotMapped]
     public IReadOnlyCollection<ItemPedido> ItensPedido => _itensPedido.AsReadOnly();
+
+    // Navigation property for EF Core
+    public List<ItemPedido> ItensPedidoList
+    {
+        get => _itensPedido;
+        set => _itensPedido = value ?? new();
+    }
 
     public Pedido() { }
 
