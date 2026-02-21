@@ -10,7 +10,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(
+                  "http://localhost:5173",
+                  "http://localhost")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -66,32 +68,26 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Migrate database
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    using (var scope = app.Services.CreateScope())
+    var db = scope.ServiceProvider.GetRequiredService<CrudPedidosContext>();
+    if (db.Database.IsRelational())
     {
-        var db = scope.ServiceProvider.GetRequiredService<CrudPedidosContext>();
-        if (db.Database.IsRelational())
-        {
-            await db.Database.MigrateAsync();
-        }
-        else
-        {
-            await db.Database.EnsureCreatedAsync();
-        }
+        await db.Database.MigrateAsync();
+    }
+    else
+    {
+        await db.Database.EnsureCreatedAsync();
     }
 }
 
 // Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CrudPedidos API v1");
-        c.RoutePrefix = "swagger";
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "CrudPedidos API v1");
+    c.RoutePrefix = "swagger";
+});
 
 if (!app.Environment.IsDevelopment())
 {
