@@ -1,7 +1,10 @@
 # CrudPedidos - Aplicação de Gerenciamento de Pedidos
 
-[![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)]()
+[![Status](https://img.shields.io/badge/Status-Backend%20%2B%20Frontend%20Conclu%C3%ADdos-brightgreen)]()
 [![.NET](https://img.shields.io/badge/.NET-10.0-blue)]()
+[![React](https://img.shields.io/badge/React-19-61dafb)]()
+[![Vite](https://img.shields.io/badge/Vite-6-646cff)]()
+[![Node](https://img.shields.io/badge/Node-22-339933)]()
 [![License](https://img.shields.io/badge/License-MIT-green)]()
 
 ## 📋 Descrição do Projeto
@@ -77,33 +80,34 @@ Aplicação completa com backend em **.NET (API REST)** e frontend em **React** 
 
 ---
 
-### 🚀 FRONTEND - React
+### ✅ FRONTEND - React
 
 #### **1. Estrutura do Projeto**
 
 | Componente | Status | Detalhes |
 |-----------|--------|---------|
-| **Setup React 18+** | ⏳ Não Iniciado | TypeScript, React Router, Axios |
-| **Estrutura de Pastas** | ⏳ Não Iniciado | Components, pages, services, hooks |
+| **React 19 + Vite 6** | ✅ Concluído | TypeScript, React Router v7, Fetch API |
+| **Estrutura de Pastas** | ✅ Concluído | components, services, types |
 
 #### **2. Funcionalidades**
 
 | Funcionalidade | Status | Detalhes |
 |----------------|--------|---------|
-| **Listagem de Pedidos** | ⏳ Não Iniciado | Tabela/Cards com filtro e ordenação |
-| **Visualização Detalhada** | ⏳ Não Iniciado | Página com dados completos |
-| **Criar Pedido** | ⏳ Não Iniciado | Formulário dinâmico com itens |
-| **Editar Pedido** | ⏳ Não Iniciado | Atualização de dados e itens |
-| **Deletar Pedido** | ⏳ Não Iniciado | Com confirmação |
-| **Cálculo de ValorTotal** | ⏳ Não Iniciado | Frontend ou exibir da API |
+| **Listagem de Pedidos** | ✅ Concluído | Tabela com dados completos, badges de status |
+| **Criar Pedido** | ✅ Concluído | Formulário dinâmico com adição/remoção de itens |
+| **Editar Pedido** | ✅ Concluído | Carrega dados existentes e atualiza |
+| **Deletar Pedido** | ✅ Concluído | Com confirmação via dialog |
+| **Exibição de ValorTotal** | ✅ Concluído | Valor total exibido na listagem (calculado pela API) |
 
 #### **3. Integração com API**
 
 | Integração | Status | Detalhes |
 |-----------|--------|---------|
-| **Serviço Axios** | ⏳ Não Iniciado | Cliente HTTP customizado |
-| **Endpoints CRUD** | ⏳ Não Iniciado | Todos os 5 endpoints integrados |
-| **Tratamento de Erros** | ⏳ Não Iniciado | Feedback ao usuário |
+| **Serviço Fetch API** | ✅ Concluído | Cliente HTTP com tratamento de erros |
+| **Endpoints CRUD** | ✅ Concluído | Todos os 5 endpoints integrados |
+| **Tratamento de Erros** | ✅ Concluído | Mensagens de erro exibidas ao usuário |
+| **Proxy Vite** | ✅ Concluído | `/api/*` redirecionado para API .NET |
+| **CORS** | ✅ Concluído | Configurado no backend para `localhost:5173` |
 
 ---
 
@@ -144,14 +148,25 @@ CrudPedidos/
 ├── CrudPedidos.Tests/               # Testes Unitários
 │   ├── Controllers/                 # Testes de controller
 │   └── Services/                    # Testes de serviço
-└── frontend/                        # Frontend React (a criar)
-    ├── src/
-    │   ├── components/              # Componentes React
-    │   ├── pages/                   # Páginas
-    │   ├── services/                # Serviço de API (Axios)
-    │   ├── hooks/                   # Custom hooks
-    │   └── styles/                  # CSS/Styled Components
-    └── package.json
+└── frontend/                        # Frontend React + TypeScript + Vite
+    ├── index.html                   # Entry point HTML
+    ├── vite.config.ts               # Configuração Vite (proxy, porta)
+    ├── tsconfig.json                # Configuração TypeScript
+    ├── package.json                 # Dependências React 19, Vite 6
+    └── src/
+        ├── main.tsx                 # Entry point React
+        ├── App.tsx                  # Rotas e layout principal
+        ├── App.css                  # Estilos globais e botões
+        ├── index.css                # Reset CSS
+        ├── components/              # Componentes React
+        │   ├── PedidoList.tsx        # Listagem de pedidos (tabela)
+        │   ├── PedidoList.css
+        │   ├── PedidoForm.tsx        # Formulário criar/editar pedido
+        │   └── PedidoForm.css
+        ├── services/
+        │   └── api.ts               # Cliente HTTP (Fetch API)
+        └── types/
+            └── pedido.ts            # Interfaces TypeScript (DTOs)
 ```
 
 ---
@@ -167,11 +182,12 @@ CrudPedidos/
 - **Padrões**: Clean Architecture, DDD, SOLID
 
 ### Frontend
-- **Framework**: React 18+
-- **Linguagem**: TypeScript (recomendado)
-- **HTTP Client**: Axios
-- **Roteamento**: React Router v6+
-- **Estilos**: CSS Modules ou Styled Components
+- **Framework**: React 19
+- **Build Tool**: Vite 6
+- **Linguagem**: TypeScript 5.8
+- **HTTP Client**: Fetch API nativa
+- **Roteamento**: React Router v7
+- **Estilos**: CSS puro
 
 ### Infraestrutura
 - **Containerização**: Docker & Docker Compose
@@ -182,8 +198,8 @@ CrudPedidos/
 ## 📋 REQUISITOS
 
 - **.NET 10.0** ou superior
-- **Node.js 18.0** ou superior
-- **npm 9.0** ou superior
+- **Node.js 22.0** ou superior
+- **npm 10.0** ou superior
 - **SQL Server 2019+** (ou InMemory para dev)
 - **Docker** (opcional, para containerização)
 
@@ -211,8 +227,8 @@ dotnet ef database update -p CrudPedidos.Infrastructure -s CrudPedidos.API
 dotnet run --project CrudPedidos.API
 ```
 
-**URL da API**: `https://localhost:7000`  
-**Swagger**: `https://localhost:7000/swagger`
+**URL da API**: `http://localhost:5234`  
+**Swagger**: `http://localhost:5234/swagger`
 
 #### Criar Novas Migrations
 
@@ -233,10 +249,12 @@ cd frontend
 npm install
 
 # Iniciar servidor de desenvolvimento
-npm start
+npm run dev
 ```
 
-**URL do Frontend**: `http://localhost:3000`
+**URL do Frontend**: `http://localhost:5173`
+
+> ⚠️ A API precisa estar rodando simultaneamente para o frontend funcionar. O Vite faz proxy automático de `/api/*` para `http://localhost:5234`.
 
 ### 4. Executar com Docker Compose (quando pronto)
 
@@ -302,8 +320,6 @@ dotnet test CrudPedidos.Tests
 ---
 
 ## 📝 API - Endpoints
-
-> ⚠️ **Em desenvolvimento** - Endereços e estruturas sujeitos a mudanças
 
 ### Criar Pedido
 ```http
@@ -393,15 +409,16 @@ DELETE /api/pedidos/{id}
 - [x] Implementar validações
 - [x] Criar testes unitários completos (32 testes - Controller + Service)
 
-### Fase 2: Frontend (Prioridade Alta)
-- [ ] Criar estrutura base React com TypeScript
-- [ ] Criar serviço Axios para API
-- [ ] Criar componente de listagem
-- [ ] Criar formulário de CRUD
-- [ ] Implementar React Router
-- [ ] Integrar todos os endpoints
-- [ ] Adicionar validações
-- [ ] Styling (CSS Modules ou Styled Components)
+### Fase 2: Frontend (Prioridade Alta) ✅ CONCLUÍDA
+- [x] Criar estrutura base React 19 com TypeScript e Vite
+- [x] Criar serviço Fetch API para comunicação com backend
+- [x] Criar componente de listagem (PedidoList)
+- [x] Criar formulário de CRUD (PedidoForm) com itens dinâmicos
+- [x] Implementar React Router v7 (rotas: /, /pedidos/novo, /pedidos/:id)
+- [x] Integrar todos os 5 endpoints CRUD
+- [x] Adicionar validações HTML5 nos formulários
+- [x] Styling com CSS puro
+- [x] Configurar proxy Vite e CORS no backend
 
 ### Fase 3: Infraestrutura (Prioridade Média)
 - [ ] Criar Dockerfile para API
@@ -456,5 +473,5 @@ Este projeto está licenciado sob a **MIT License** - veja o arquivo `LICENSE` p
 
 ---
 
-**Última atualização**: 2024  
-**Status**: ✅ Fase 1 Backend Concluída | 🚀 Pronto para Fase 2 (Frontend)
+**Última atualização**: 2025  
+**Status**: ✅ Fase 1 Backend Concluída | ✅ Fase 2 Frontend Concluída | 🚀 Pronto para Fase 3 (Infraestrutura)
