@@ -23,7 +23,8 @@ public class PedidoProfile : Profile
                     i.ValorUnitario,
                     i.Quantidade
                 )).ToList()
-            ));
+            ))
+            .ForMember(dest => dest.ItensPedido, opt => opt.Ignore());
 
         CreateMap<CriarItemPedidoDTO, ItemPedido>()
             .ConstructUsing(src => new ItemPedido(
