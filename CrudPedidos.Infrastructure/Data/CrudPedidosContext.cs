@@ -20,6 +20,7 @@ public class CrudPedidosContext : DbContext
         modelBuilder.Entity<Pedido>(entity =>
         {
             entity.HasKey(e => e.Id);
+            entity.ToTable("Pedidos");
 
             entity.Property(e => e.NomeCliente)
                 .IsRequired()
@@ -37,16 +38,12 @@ public class CrudPedidosContext : DbContext
 
             entity.Property(e => e.DataCriacao)
                 .HasDefaultValueSql("GETUTCDATE()");
-
-            entity.HasMany<ItemPedido>()
-                .WithOne(i => i.Pedido)
-                .HasForeignKey(i => i.PedidoId)
-                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<ItemPedido>(entity =>
         {
             entity.HasKey(e => e.Id);
+            entity.ToTable("ItensPedido");
 
             entity.Property(e => e.NomeProduto)
                 .IsRequired()
@@ -59,6 +56,12 @@ public class CrudPedidosContext : DbContext
                 .IsRequired();
 
             entity.Property(e => e.PedidoId)
+                .IsRequired();
+
+            entity.HasOne(i => i.Pedido)
+                .WithMany(p => p.ItensPedidoList)
+                .HasForeignKey(i => i.PedidoId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
         });
     }

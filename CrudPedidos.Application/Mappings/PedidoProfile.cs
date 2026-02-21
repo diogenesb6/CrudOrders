@@ -9,7 +9,7 @@ public class PedidoProfile : Profile
     public PedidoProfile()
     {
         CreateMap<Pedido, PedidoDTO>()
-            .ForMember(dest => dest.ItensPedido, opt => opt.MapFrom(src => src.ItensPedido));
+            .ForMember(dest => dest.ItensPedido, opt => opt.MapFrom(src => src.ItensPedidoList));
 
         CreateMap<ItemPedido, ItemPedidoDTO>();
 
@@ -23,7 +23,8 @@ public class PedidoProfile : Profile
                     i.ValorUnitario,
                     i.Quantidade
                 )).ToList()
-            ));
+            ))
+            .ForMember(dest => dest.ItensPedido, opt => opt.Ignore());
 
         CreateMap<CriarItemPedidoDTO, ItemPedido>()
             .ConstructUsing(src => new ItemPedido(

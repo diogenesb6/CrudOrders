@@ -20,6 +20,7 @@ public class PedidoServiceTests
         _repositoryMock = new Mock<IPedidoRepository>();
 
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddAutoMapper(cfg => cfg.AddProfile<PedidoProfile>());
         var serviceProvider = services.BuildServiceProvider();
         _mapper = serviceProvider.GetRequiredService<IMapper>();
@@ -234,6 +235,125 @@ public class PedidoServiceTests
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _service.CriarAsync(criarDto));
+    }
+
+    #endregion
+
+    #region Atualizar
+
+    [Fact]
+    public async Task AtualizarAsync_ComDadosValidos_DeveRetornarPedidoAtualizado()
+    {
+        // Arrange
+        int id = 1;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "João Silva Atualizado",
+            EmailCliente = "joao.atualizado@example.com",
+            Pago = true,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        var pedidoExistente = new Pedido(
+            "João Silva",
+            "joao@example.com",
+            new List<ItemPedido>
+            {
+                new ItemPedido(1, "Produto A", 100.00m, 2)
+            }
+        )
+        {
+            Id = id
+        };
+
+        _repositoryMock.Setup(r => r.ObterPorIdAsync(id))
+            .ReturnsAsync(pedidoExistente);
+
+        _repositoryMock.Setup(r => r.AtualizarAsync(It.IsAny<Pedido>()))
+            .ReturnsAsync((Pedido p) => p);
+
+        // Act
+        var resultado = await _service.AtualizarAsync(id, atualizarDto);
+
+        // Assert
+        Assert.NotNull(resultado);
+        Assert.Equal(id, resultado.Id);
+        Assert.Equal("João Silva Atualizado", resultado.NomeCliente);
+        Assert.Equal("joao.atualizado@example.com", resultado.EmailCliente);
+        Assert.True(resultado.Pago);
+        _repositoryMock.Verify(r => r.ObterPorIdAsync(id), Times.Once);
+        _repositoryMock.Verify(r => r.AtualizarAsync(It.IsAny<Pedido>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task AtualizarAsync_ComIdInvalido_DeveLancarArgumentException()
+    {
+        // Arrange
+        int id = 0;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "João Silva",
+            EmailCliente = "joao@example.com",
+            Pago = false,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => _service.AtualizarAsync(id, atualizarDto));
+    }
+
+    [Fact]
+    public async Task AtualizarAsync_ComIdInexistente_DeveLancarInvalidOperationException()
+    {
+        // Arrange
+        int id = 999;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "João Silva",
+            EmailCliente = "joao@example.com",
+            Pago = false,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        _repositoryMock.Setup(r => r.ObterPorIdAsync(id))
+            .ReturnsAsync((Pedido?)null);
+
+        // Act & Assert
+        await Assert.ThrowsAsync<InvalidOperationException>(() => _service.AtualizarAsync(id, atualizarDto));
+    }
+
+    [Fact]
+    public async Task AtualizarAsync_ComNomeClienteVazio_DeveLancarArgumentException()
+    {
+        // Arrange
+        int id = 1;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "",
+            EmailCliente = "joao@example.com",
+            Pago = false,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => _service.AtualizarAsync(id, atualizarDto));
+    }
+
+    [Fact]
+    public async Task AtualizarAsync_ComEmailClienteVazio_DeveLancarArgumentException()
+    {
+        // Arrange
+        int id = 1;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "João Silva",
+            EmailCliente = "",
+            Pago = false,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => _service.AtualizarAsync(id, atualizarDto));
     }
 
     #endregion
