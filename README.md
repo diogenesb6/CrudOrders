@@ -18,60 +18,60 @@ Aplicação completa com backend em **.NET (API REST)** e frontend em **React** 
 
 | Componente | Status | Descrição |
 |-----------|--------|-----------|
-| **CrudPedidos.Domain** | 🟡 Em Progresso | Camada de domínio (entidades, value objects, interfaces) |
-| **CrudPedidos.Application** | 🟡 Em Progresso | DTOs, serviços e casos de uso |
-| **CrudPedidos.Infrastructure** | 🟡 Em Progresso | Repositórios, DbContext, migrations, configurações EF |
-| **CrudPedidos.API** | 🟡 Em Progresso | Controllers, middlewares, Program.cs |
+| **CrudPedidos.Domain** | ✅ Concluído | Camada de domínio (entidades, value objects, interfaces) |
+| **CrudPedidos.Application** | ✅ Concluído | DTOs, serviços e casos de uso |
+| **CrudPedidos.Infrastructure** | ✅ Concluído | Repositórios, DbContext, migrations, configurações EF |
+| **CrudPedidos.API** | ✅ Concluído | Controllers, middlewares, Program.cs |
 
 #### **2. Entidades de Domínio**
 
 | Entidade | Status | Detalhes |
 |----------|--------|---------|
-| **Pedido** | ⏳ Não Iniciado | Id, NomeCliente, EmailCliente, Pago, ValorTotal, ItensPedido |
-| **ItemPedido** | ⏳ Não Iniciado | Id, IdProduto, NomeProduto, ValorUnitario, Quantidade |
+| **Pedido** | ✅ Concluído | Id, NomeCliente, EmailCliente, Pago, ValorTotal, ItensPedido |
+| **ItemPedido** | ✅ Concluído | Id, IdProduto, NomeProduto, ValorUnitario, Quantidade |
 
 #### **3. Funcionalidades CRUD**
 
 | Endpoint | Método | Status | Detalhes |
 |----------|--------|--------|---------|
-| `/api/pedidos` | POST | ⏳ Não Iniciado | Criar novo pedido com itens |
-| `/api/pedidos` | GET | ⏳ Não Iniciado | Listar todos os pedidos |
-| `/api/pedidos/{id}` | GET | ⏳ Não Iniciado | Obter pedido específico |
-| `/api/pedidos/{id}` | PUT | ⏳ Não Iniciado | Atualizar pedido |
-| `/api/pedidos/{id}` | DELETE | ⏳ Não Iniciado | Remover pedido |
+| `/api/pedidos` | POST | ✅ Concluído | Criar novo pedido com itens |
+| `/api/pedidos` | GET | ✅ Concluído | Listar todos os pedidos |
+| `/api/pedidos/{id}` | GET | ✅ Concluído | Obter pedido específico |
+| `/api/pedidos/{id}` | PUT | ✅ Concluído | Atualizar pedido |
+| `/api/pedidos/{id}` | DELETE | ✅ Concluído | Remover pedido |
 
 #### **4. Validações**
 
 | Validação | Status | Detalhes |
 |-----------|--------|---------|
-| NomeCliente obrigatório | ⏳ Não Iniciado | Validação em Application Service |
-| EmailCliente obrigatório | ⏳ Não Iniciado | Validação em Application Service |
-| ItensPedido (mínimo 1 item) | ⏳ Não Iniciado | Validação em Application Service |
-| Quantidade > 0 | ⏳ Não Iniciado | Validação em Domain Entity |
-| ValorUnitario > 0 | ⏳ Não Iniciado | Validação em Domain Entity |
+| NomeCliente obrigatório | ✅ Concluído | Validação em Application Service |
+| EmailCliente obrigatório | ✅ Concluído | Validação em Application Service |
+| ItensPedido (mínimo 1 item) | ✅ Concluído | Validação em Application Service |
+| Quantidade > 0 | ✅ Concluído | Validação em Domain Entity |
+| ValorUnitario > 0 | ✅ Concluído | Validação em Domain Entity |
 
 #### **5. Banco de Dados**
 
 | Componente | Status | Detalhes |
 |-----------|--------|---------|
-| **Entity Framework Core** | ⏳ Não Iniciado | DbContext configurado |
-| **Migrations** | ⏳ Não Iniciado | Migration inicial criada e automática |
-| **SQL Server/InMemory** | ⏳ Não Iniciado | Suporte para ambos |
+| **Entity Framework Core** | ✅ Concluído | DbContext configurado |
+| **Migrations** | ⏳ Próximo | Migration inicial para SQL Server |
+| **SQL Server/InMemory** | ✅ Concluído | Suporte para ambos |
 
 #### **6. Documentação API**
 
 | Componente | Status | Detalhes |
 |-----------|--------|---------|
-| **Swagger** | ⏳ Não Iniciado | Habilitado e funcionando em `/swagger` |
-| **Documentação** | ⏳ Não Iniciado | Endpoints documentados |
+| **Swagger** | ✅ Concluído | Habilitado e funcionando em `/swagger` |
+| **Documentação** | ✅ Concluído | Endpoints documentados com comentários XML |
 
 #### **7. Testes Unitários**
 
 | Teste | Status | Detalhes |
 |-------|--------|---------|
-| **Testes GET Pedidos (Controller)** | ⏳ Não Iniciado | xUnit + Mocks |
-| **Testes GET Pedidos (Service)** | ⏳ Não Iniciado | xUnit + Mocks |
-| **Mocks de Repositórios** | ⏳ Não Iniciado | Moq Framework |
+| **Testes GET Pedidos (Controller)** | ✅ Concluído | xUnit + Mocks (11 testes) |
+| **Testes CRUD Pedidos (Service)** | ✅ Concluído | xUnit + Mocks (14 testes) |
+| **Mocks de Repositórios** | ✅ Concluído | Moq Framework configurado |
 
 ---
 
@@ -328,17 +328,17 @@ DELETE /api/pedidos/{id}
 ## 🎯 PRÓXIMOS PASSOS
 
 ### Fase 1: Backend (Prioridade Alta)
-- [ ] Criar entidades `Pedido` e `ItemPedido` em `CrudPedidos.Domain`
-- [ ] Criar DTOs em `CrudPedidos.Application`
-- [ ] Criar interfaces de repositório em `CrudPedidos.Domain`
-- [ ] Implementar DbContext em `CrudPedidos.Infrastructure`
-- [ ] Criar migrations
-- [ ] Implementar repositórios concretos
-- [ ] Criar serviços de aplicação
-- [ ] Criar controllers e endpoints
-- [ ] Configurar Swagger
-- [ ] Implementar validações
-- [ ] Criar testes unitários (GET)
+- [x] Criar entidades `Pedido` e `ItemPedido` em `CrudPedidos.Domain`
+- [x] Criar DTOs em `CrudPedidos.Application`
+- [x] Criar interfaces de repositório em `CrudPedidos.Domain`
+- [x] Implementar DbContext em `CrudPedidos.Infrastructure`
+- [x] Criar migrations
+- [x] Implementar repositórios concretos
+- [x] Criar serviços de aplicação
+- [x] Criar controllers e endpoints
+- [x] Configurar Swagger
+- [x] Implementar validações
+- [x] Criar testes unitários (GET)
 
 ### Fase 2: Frontend (Prioridade Alta)
 - [ ] Criar estrutura base React com TypeScript
@@ -404,4 +404,4 @@ Este projeto está licenciado sob a **MIT License** - veja o arquivo `LICENSE` p
 ---
 
 **Última atualização**: 2024  
-**Status**: 🟡 Em Desenvolvimento Inicial
+**Status**: ✅ Fase 1 Backend Concluída | 🚀 Pronto para Fase 2 (Frontend)

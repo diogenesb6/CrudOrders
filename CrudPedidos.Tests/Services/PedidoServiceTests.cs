@@ -4,6 +4,7 @@ using CrudPedidos.Application.Mappings;
 using CrudPedidos.Application.Services;
 using CrudPedidos.Domain.Entities;
 using CrudPedidos.Domain.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
 namespace CrudPedidos.Tests;
@@ -18,11 +19,10 @@ public class PedidoServiceTests
     {
         _repositoryMock = new Mock<IPedidoRepository>();
 
-        var config = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<PedidoProfile>();
-        });
-        _mapper = config.CreateMapper();
+        var services = new ServiceCollection();
+        services.AddAutoMapper(cfg => cfg.AddProfile<PedidoProfile>());
+        var serviceProvider = services.BuildServiceProvider();
+        _mapper = serviceProvider.GetRequiredService<IMapper>();
 
         _service = new PedidoService(_repositoryMock.Object, _mapper);
     }
