@@ -251,6 +251,160 @@ public class PedidosControllerTests
 
     #endregion
 
+    #region Atualizar
+
+    [Fact]
+    public async Task Atualizar_ComDadosValidos_DeveRetornarOkComPedidoAtualizado()
+    {
+        // Arrange
+        int id = 1;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "João Silva Atualizado",
+            EmailCliente = "joao.atualizado@example.com",
+            Pago = true,
+            ItensPedido = new List<CriarItemPedidoDTO>
+            {
+                new CriarItemPedidoDTO
+                {
+                    IdProduto = 1,
+                    NomeProduto = "Produto A",
+                    ValorUnitario = 150.00m,
+                    Quantidade = 3
+                }
+            }
+        };
+
+        var pedidoAtualizado = new PedidoDTO
+        {
+            Id = id,
+            NomeCliente = atualizarDto.NomeCliente,
+            EmailCliente = atualizarDto.EmailCliente,
+            Pago = atualizarDto.Pago,
+            ValorTotal = 450.00m,
+            ItensPedido = new List<ItemPedidoDTO>
+            {
+                new ItemPedidoDTO
+                {
+                    Id = 1,
+                    IdProduto = 1,
+                    NomeProduto = "Produto A",
+                    ValorUnitario = 150.00m,
+                    Quantidade = 3
+                }
+            }
+        };
+
+        _pedidoServiceMock.Setup(s => s.AtualizarAsync(id, atualizarDto))
+            .ReturnsAsync(pedidoAtualizado);
+
+        // Act
+        var resultado = await _controller.Atualizar(id, atualizarDto);
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(resultado.Result);
+        var pedido = Assert.IsType<PedidoDTO>(okResult.Value);
+        Assert.Equal(id, pedido.Id);
+        Assert.Equal("João Silva Atualizado", pedido.NomeCliente);
+        Assert.True(pedido.Pago);
+        _pedidoServiceMock.Verify(s => s.AtualizarAsync(id, atualizarDto), Times.Once);
+    }
+
+    [Fact]
+    public async Task Atualizar_ComIdInexistente_DeveRetornarNotFound()
+    {
+        // Arrange
+        int id = 999;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "João Silva",
+            EmailCliente = "joao@example.com",
+            Pago = false,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        _pedidoServiceMock.Setup(s => s.AtualizarAsync(id, atualizarDto))
+            .ThrowsAsync(new InvalidOperationException($"Pedido com id {id} não encontrado"));
+
+        // Act
+        var resultado = await _controller.Atualizar(id, atualizarDto);
+
+        // Assert
+        Assert.IsType<NotFoundObjectResult>(resultado.Result);
+    }
+
+    [Fact]
+    public async Task Atualizar_ComNomeClienteVazio_DeveRetornarBadRequest()
+    {
+        // Arrange
+        int id = 1;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "",
+            EmailCliente = "joao@example.com",
+            Pago = false,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        _pedidoServiceMock.Setup(s => s.AtualizarAsync(id, atualizarDto))
+            .ThrowsAsync(new ArgumentException("Nome do cliente é obrigatório"));
+
+        // Act
+        var resultado = await _controller.Atualizar(id, atualizarDto);
+
+        // Assert
+        Assert.IsType<BadRequestObjectResult>(resultado.Result);
+    }
+
+    [Fact]
+    public async Task Atualizar_ComIdInvalido_DeveRetornarBadRequest()
+    {
+        // Arrange
+        int id = 0;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "João Silva",
+            EmailCliente = "joao@example.com",
+            Pago = false,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        _pedidoServiceMock.Setup(s => s.AtualizarAsync(id, atualizarDto))
+            .ThrowsAsync(new ArgumentException("Id deve ser maior que zero"));
+
+        // Act
+        var resultado = await _controller.Atualizar(id, atualizarDto);
+
+        // Assert
+        Assert.IsType<BadRequestObjectResult>(resultado.Result);
+    }
+
+    [Fact]
+    public async Task Atualizar_QuandoServicoLancaExcecao_DeveRetornarInternalServerError()
+    {
+        // Arrange
+        int id = 1;
+        var atualizarDto = new AtualizarPedidoDTO
+        {
+            NomeCliente = "João Silva",
+            EmailCliente = "joao@example.com",
+            Pago = false,
+            ItensPedido = new List<CriarItemPedidoDTO>()
+        };
+
+        _pedidoServiceMock.Setup(s => s.AtualizarAsync(id, atualizarDto))
+            .ThrowsAsync(new Exception("Erro inesperado na base de dados"));
+
+        // Act
+        var resultado = await _controller.Atualizar(id, atualizarDto);
+
+        // Assert
+        var statusResult = Assert.IsType<ObjectResult>(resultado.Result);
+        Assert.Equal(500, statusResult.StatusCode);
+    }
+
+    #endregion
+
     #region Deletar
 
     [Fact]
