@@ -9,7 +9,7 @@ public class PedidoProfile : Profile
     public PedidoProfile()
     {
         CreateMap<Pedido, PedidoDTO>()
-            .ForMember(dest => dest.ItensPedido, opt => opt.MapFrom(src => src.ItensPedido));
+            .ForMember(dest => dest.ItensPedido, opt => opt.MapFrom(src => src.ItensPedidoList));
 
         CreateMap<ItemPedido, ItemPedidoDTO>();
 
