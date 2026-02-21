@@ -70,9 +70,10 @@ Aplicação completa com backend em **.NET (API REST)** e frontend em **React** 
 
 | Teste | Status | Detalhes |
 |-------|--------|---------|
-| **Testes GET Pedidos (Controller)** | ✅ Concluído | xUnit + Mocks (11 testes) |
-| **Testes CRUD Pedidos (Service)** | ✅ Concluído | xUnit + Mocks (14 testes) |
+| **Testes CRUD Pedidos (Controller)** | ✅ Concluído | xUnit + Mocks (16 testes) |
+| **Testes CRUD Pedidos (Service)** | ✅ Concluído | xUnit + Mocks (16 testes) |
 | **Mocks de Repositórios** | ✅ Concluído | Moq Framework configurado |
+| **Total de Testes** | ✅ Concluído | **32 testes passando** |
 
 ---
 
@@ -379,7 +380,7 @@ DELETE /api/pedidos/{id}
 
 ## 🎯 PRÓXIMOS PASSOS
 
-### Fase 1: Backend (Prioridade Alta)
+### Fase 1: Backend (Prioridade Alta) ✅ CONCLUÍDA
 - [x] Criar entidades `Pedido` e `ItemPedido` em `CrudPedidos.Domain`
 - [x] Criar DTOs em `CrudPedidos.Application`
 - [x] Criar interfaces de repositório em `CrudPedidos.Domain`
@@ -390,7 +391,7 @@ DELETE /api/pedidos/{id}
 - [x] Criar controllers e endpoints
 - [x] Configurar Swagger
 - [x] Implementar validações
-- [x] Criar testes unitários (GET)
+- [x] Criar testes unitários completos (32 testes - Controller + Service)
 
 ### Fase 2: Frontend (Prioridade Alta)
 - [ ] Criar estrutura base React com TypeScript
