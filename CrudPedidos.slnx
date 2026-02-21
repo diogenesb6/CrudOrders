@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="CrudPedidos.API/CrudPedidos.API.csproj" />
+  <Project Path="CrudPedidos.Application/CrudPedidos.Application.csproj" />
+  <Project Path="CrudPedidos.Domain/CrudPedidos.Domain.csproj" />
+  <Project Path="CrudPedidos.Infrastructure/CrudPedidos.Infrastructure.csproj" />
+  <Project Path="CrudPedidos.Tests/CrudPedidos.Tests.csproj" />
+</Solution>
