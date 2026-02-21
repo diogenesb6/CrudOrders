@@ -394,7 +394,34 @@ DELETE /api/pedidos/{id}
 
 ---
 
-## 🎯 PRÓXIMOS PASSOS
+## 🎯 CHECKLIST DOS REQUISITOS ORIGINAIS
+
+### ✅ OBRIGATÓRIO (Eliminatório)
+
+| # | Requisito | Status | Evidência |
+|---|-----------|--------|-----------|
+| 1 | Projeto compilando com sucesso | ✅ Concluído | Backend .NET 10 e Frontend TypeScript compilam sem erros |
+| 2 | Conceitos de DDD, SOLID e Clean Code | ✅ Concluído | Clean Architecture (Domain, Application, Infrastructure, API), entidades ricas, injeção de dependência, SRP |
+| 3 | API .NET com CRUD de criar PEDIDO | ✅ Concluído | `POST /api/pedidos`, `GET`, `PUT`, `DELETE` em `PedidosController` |
+| 4 | Teste unitário back-end (mínimo GET Pedido) | ✅ Concluído | 32 testes xUnit + Moq (Controller + Service) cobrindo GET, POST, PUT, DELETE |
+| 5 | Migration SQL funcionando no projeto | ✅ Concluído | `InitialCreate` migration com EF Core — tabelas Pedidos e ItensPedido |
+| 6 | Swagger implementado e funcionando | ✅ Concluído | Disponível em `/swagger` com documentação completa |
+| 7 | GET PEDIDO retorna JSON no modelo especificado | ✅ Concluído | `PedidoDTO` retorna: id, nomeCliente, emailCliente, pago, valorTotal (soma qty × valor), itensPedido[] |
+| 8 | Projeto publicado em repositório GIT | ✅ Concluído | GitHub: `github.com/diogenesb6/CrudPedidos` |
+
+### 🌟 DESEJÁVEL (Diferencial)
+
+| # | Requisito | Status | Evidência |
+|---|-----------|--------|-----------|
+| 1 | Arquivo README com informações sobre a aplicação | ✅ Concluído | README completo com arquitetura, setup, endpoints, schema DB |
+| 2 | Front-end com integrações e comportamentos básicos | ✅ Concluído | React 19 + TypeScript + Vite — CRUD completo integrado via Fetch API |
+| 3 | API e Front-end publicada em Cloud | ❌ Não feito | Não deployado em Azure/AWS/Heroku |
+| 4 | Banco de dados no Docker Compose | ❌ Não feito | Sem `docker-compose.yml` / `Dockerfile` |
+| 5 | Design Patterns | ✅ Concluído | Repository Pattern, Service Layer, DTO Pattern, Dependency Injection, Factory (DesignTimeDbContextFactory) |
+
+---
+
+## 📌 PRÓXIMOS PASSOS
 
 ### Fase 1: Backend (Prioridade Alta) ✅ CONCLUÍDA
 - [x] Criar entidades `Pedido` e `ItemPedido` em `CrudPedidos.Domain`
