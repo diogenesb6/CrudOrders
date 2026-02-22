@@ -334,7 +334,7 @@ dotnet test CrudPedidos.Tests
 
 ### Migrations Aplicadas
 
-#### ✅ InitialCreate (20260221180758)
+#### ✅ InitialCreate
 - Criação das tabelas `Pedidos` e `ItensPedido`
 - Configuração de chaves primárias e estrangeiras
 - Índices para melhor desempenho
