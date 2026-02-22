@@ -1,6 +1,7 @@
 # CrudPedidos - Aplicação de Gerenciamento de Pedidos
 
-[![Status](https://img.shields.io/badge/Status-Backend%20%2B%20Frontend%20Conclu%C3%ADdos-brightgreen)]()
+[![Status](https://img.shields.io/badge/Status-Backend%20%2B%20Frontend%20%2B%20Docker%20Conclu%C3%ADdos-brightgreen)]()
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ed)]()
 [![.NET](https://img.shields.io/badge/.NET-10.0-blue)]()
 [![React](https://img.shields.io/badge/React-19-61dafb)]()
 [![Vite](https://img.shields.io/badge/Vite-6-646cff)]()
@@ -111,13 +112,18 @@ Aplicação completa com backend em **.NET (API REST)** e frontend em **React** 
 
 ---
 
-### 🐳 INFRAESTRUTURA
+### ✅ INFRAESTRUTURA
 
 | Componente | Status | Detalhes |
 |-----------|--------|---------|
-| **Docker Compose** | ⏳ Não Iniciado | API, Frontend, SQL Server |
-| **docker-compose.yml** | ⏳ Não Iniciado | Serviços configurados |
-| **Deploy Cloud** | ⏳ Não Iniciado | Instruções Azure/AWS/Heroku (opcional) |
+| **Dockerfile API** | ✅ Concluído | Multi-stage build: SDK → publish → ASP.NET 10 runtime (porta 8080) |
+| **Dockerfile Frontend** | ✅ Concluído | Multi-stage build: Node 22 → Vite build → Nginx serve |
+| **nginx.conf** | ✅ Concluído | SPA routing + proxy reverso `/api/` → container API |
+| **docker-compose.yml** | ✅ Concluído | 3 serviços: SQL Server 2022 + API .NET + Frontend Nginx |
+| **.dockerignore** | ✅ Concluído | API e Frontend com ignores otimizados |
+| **Healthcheck SQL** | ✅ Concluído | API aguarda SQL Server ficar saudável antes de iniciar |
+| **Migration automática** | ✅ Concluído | EF Core aplica migrations ao iniciar em Production |
+| **Deploy Cloud** | ⏳ Opcional | Não deployado em Azure/AWS/Heroku |
 
 ---
 
@@ -127,6 +133,8 @@ Aplicação completa com backend em **.NET (API REST)** e frontend em **React** 
 
 ```
 CrudPedidos/
+├── docker-compose.yml               # Orquestra API + Frontend + SQL Server
+├── .dockerignore                    # Ignora bin/, obj/, node_modules/, tests
 ├── CrudPedidos.Domain/              # Camada de Domínio
 │   ├── Entities/                    # Entidades (Pedido, ItemPedido)
 │   ├── ValueObjects/                # Value Objects
@@ -139,16 +147,19 @@ CrudPedidos/
 ├── CrudPedidos.Infrastructure/      # Camada de Infraestrutura
 │   ├── Data/                        # DbContext
 │   ├── Repositories/                # Implementações de repositório
-│   ├── Persistence/                 # Migrations
+│   ├── Migrations/                  # EF Core Migrations
 │   └── DependencyInjection/         # Configuração de DI
 ├── CrudPedidos.API/                 # Camada de Apresentação
 │   ├── Controllers/                 # Controllers da API
-│   ├── Middlewares/                 # Middlewares customizados
+│   ├── Dockerfile                   # Multi-stage build .NET 10
 │   └── Program.cs                   # Configuração inicial
 ├── CrudPedidos.Tests/               # Testes Unitários
 │   ├── Controllers/                 # Testes de controller
 │   └── Services/                    # Testes de serviço
 └── frontend/                        # Frontend React + TypeScript + Vite
+    ├── Dockerfile                   # Multi-stage build Node 22 + Nginx
+    ├── nginx.conf                   # SPA routing + proxy reverso /api/
+    ├── .dockerignore                # Ignora node_modules/, dist/
     ├── index.html                   # Entry point HTML
     ├── vite.config.ts               # Configuração Vite (proxy, porta)
     ├── tsconfig.json                # Configuração TypeScript
@@ -191,6 +202,8 @@ CrudPedidos/
 
 ### Infraestrutura
 - **Containerização**: Docker & Docker Compose
+- **Web Server**: Nginx (frontend em produção)
+- **Banco de Dados Docker**: SQL Server 2022
 - **Cloud**: Azure/AWS/Heroku (opcional)
 
 ---
@@ -256,11 +269,20 @@ npm run dev
 
 > ⚠️ A API precisa estar rodando simultaneamente para o frontend funcionar. O Vite faz proxy automático de `/api/*` para `http://localhost:5234`.
 
-### 4. Executar com Docker Compose (quando pronto)
+### 4. Executar com Docker Compose
 
 ```bash
 docker-compose up --build
 ```
+
+| Serviço | URL | Descrição |
+|---------|-----|-----------|
+| **Frontend** | `http://localhost:5173` | React via Nginx (proxy reverso para API) |
+| **API** | `http://localhost:5234` | ASP.NET 10 |
+| **Swagger** | `http://localhost:5234/swagger` | Documentação interativa |
+| **SQL Server** | `localhost:1433` | Usuário: `sa` / Senha: `CrudPedidos@2025` |
+
+> A API aguarda o SQL Server ficar saudável (healthcheck) antes de iniciar e aplica as migrations automaticamente.
 
 ---
 
@@ -415,8 +437,8 @@ DELETE /api/pedidos/{id}
 |---|-----------|--------|-----------|
 | 1 | Arquivo README com informações sobre a aplicação | ✅ Concluído | README completo com arquitetura, setup, endpoints, schema DB |
 | 2 | Front-end com integrações e comportamentos básicos | ✅ Concluído | React 19 + TypeScript + Vite — CRUD completo integrado via Fetch API |
-| 3 | API e Front-end publicada em Cloud | ❌ Não feito | Não deployado em Azure/AWS/Heroku |
-| 4 | Banco de dados no Docker Compose | ❌ Não feito | Sem `docker-compose.yml` / `Dockerfile` |
+| 3 | API e Front-end publicada em Cloud | ⏳ Opcional | Não deployado em Azure/AWS/Heroku |
+| 4 | Banco de dados no Docker Compose | ✅ Concluído | `docker-compose.yml` com SQL Server 2022, API .NET 10, Frontend Nginx — healthcheck + migrations automáticas |
 | 5 | Design Patterns | ✅ Concluído | Repository Pattern, Service Layer, DTO Pattern, Dependency Injection, Factory (DesignTimeDbContextFactory) |
 
 ---
@@ -447,11 +469,13 @@ DELETE /api/pedidos/{id}
 - [x] Styling com CSS puro
 - [x] Configurar proxy Vite e CORS no backend
 
-### Fase 3: Infraestrutura (Prioridade Média)
-- [ ] Criar Dockerfile para API
-- [ ] Criar Dockerfile para Frontend
-- [ ] Criar docker-compose.yml
-- [ ] Testar containerização local
+### Fase 3: Infraestrutura (Prioridade Média) ✅ CONCLUÍDA
+- [x] Criar Dockerfile para API (multi-stage build .NET 10)
+- [x] Criar Dockerfile para Frontend (Node 22 + Nginx)
+- [x] Criar docker-compose.yml (API + Frontend + SQL Server 2022)
+- [x] Configurar nginx.conf (SPA routing + proxy reverso)
+- [x] Configurar healthcheck e migration automática
+- [x] Criar .dockerignore (API + Frontend)
 - [ ] (Opcional) Deploy em cloud
 
 ### Fase 4: Qualidade (Prioridade Média)
@@ -501,4 +525,4 @@ Este projeto está licenciado sob a **MIT License** - veja o arquivo `LICENSE` p
 ---
 
 **Última atualização**: 2025  
-**Status**: ✅ Fase 1 Backend Concluída | ✅ Fase 2 Frontend Concluída | 🚀 Pronto para Fase 3 (Infraestrutura)
+**Status**: ✅ Fase 1 Backend | ✅ Fase 2 Frontend | ✅ Fase 3 Docker | 🚀 Pronto para Fase 4 (Qualidade)
