@@ -1,6 +1,0 @@
-@CrudPedidos.API_HostAddress = http://localhost:5234
-
-GET {{CrudPedidos.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
