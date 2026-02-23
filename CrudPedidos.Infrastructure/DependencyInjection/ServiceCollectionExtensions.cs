@@ -12,8 +12,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructureServices(
         this IServiceCollection services)
     {
-        services.AddScoped<IPedidoRepository, PedidoRepository>();
-        services.AddScoped<IPedidoService, PedidoService>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IOrderService, OrderService>();
 
         return services;
     }

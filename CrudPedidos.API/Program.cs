@@ -38,7 +38,7 @@ builder.Services.AddDbContext<CrudPedidosContext>(options =>
 // AutoMapper
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.AddProfile<PedidoProfile>();
+    cfg.AddProfile<OrderProfile>();
 });
 
 // Application Services

@@ -5,8 +5,8 @@ namespace CrudPedidos.Infrastructure.Data;
 
 public class CrudPedidosContext : DbContext
 {
-    public DbSet<Pedido> Pedidos { get; set; }
-    public DbSet<ItemPedido> ItensPedido { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
 
     public CrudPedidosContext(DbContextOptions<CrudPedidosContext> options)
         : base(options)
@@ -17,50 +17,65 @@ public class CrudPedidosContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Pedido>(entity =>
+        modelBuilder.Entity<Order>(entity =>
         {
             entity.HasKey(e => e.Id);
             entity.ToTable("Pedidos");
 
-            entity.Property(e => e.NomeCliente)
+            entity.Property(e => e.CustomerName)
                 .IsRequired()
-                .HasMaxLength(255);
+                .HasMaxLength(255)
+                .HasColumnName("NomeCliente");
 
-            entity.Property(e => e.EmailCliente)
+            entity.Property(e => e.CustomerEmail)
                 .IsRequired()
-                .HasMaxLength(255);
+                .HasMaxLength(255)
+                .HasColumnName("EmailCliente");
 
-            entity.Property(e => e.Pago)
-                .HasDefaultValue(false);
+            entity.Property(e => e.Paid)
+                .HasDefaultValue(false)
+                .HasColumnName("Pago");
 
-            entity.Property(e => e.ValorTotal)
-                .HasPrecision(18, 2);
+            entity.Property(e => e.TotalAmount)
+                .HasPrecision(18, 2)
+                .HasColumnName("ValorTotal");
 
-            entity.Property(e => e.DataCriacao)
-                .HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("GETUTCDATE()")
+                .HasColumnName("DataCriacao");
+
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnName("DataAtualizacao");
         });
 
-        modelBuilder.Entity<ItemPedido>(entity =>
+        modelBuilder.Entity<OrderItem>(entity =>
         {
             entity.HasKey(e => e.Id);
             entity.ToTable("ItensPedido");
 
-            entity.Property(e => e.NomeProduto)
+            entity.Property(e => e.ProductId)
+                .HasColumnName("IdProduto");
+
+            entity.Property(e => e.ProductName)
                 .IsRequired()
-                .HasMaxLength(255);
+                .HasMaxLength(255)
+                .HasColumnName("NomeProduto");
 
-            entity.Property(e => e.ValorUnitario)
-                .HasPrecision(18, 2);
+            entity.Property(e => e.UnitPrice)
+                .HasPrecision(18, 2)
+                .HasColumnName("ValorUnitario");
 
-            entity.Property(e => e.Quantidade)
-                .IsRequired();
+            entity.Property(e => e.Quantity)
+                .IsRequired()
+                .HasColumnName("Quantidade");
 
-            entity.Property(e => e.PedidoId)
-                .IsRequired();
+            entity.Property(e => e.OrderId)
+                .IsRequired()
+                .HasColumnName("PedidoId");
 
-            entity.HasOne(i => i.Pedido)
-                .WithMany(p => p.ItensPedidoList)
-                .HasForeignKey(i => i.PedidoId)
+            entity.HasOne(i => i.Order)
+                .WithMany(p => p.OrderItemsList)
+                .HasForeignKey(i => i.OrderId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
         });

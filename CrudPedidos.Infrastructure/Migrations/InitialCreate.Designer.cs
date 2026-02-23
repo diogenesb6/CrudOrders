@@ -25,7 +25,7 @@ namespace CrudPedidos.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CrudPedidos.Domain.Entities.ItemPedido", b =>
+            modelBuilder.Entity("CrudPedidos.Domain.Entities.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,32 +33,37 @@ namespace CrudPedidos.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("IdProduto")
-                        .HasColumnType("int");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("IdProduto");
 
-                    b.Property<string>("NomeProduto")
+                    b.Property<string>("ProductName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("NomeProduto");
 
-                    b.Property<int>("PedidoId")
-                        .HasColumnType("int");
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int")
+                        .HasColumnName("PedidoId");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int")
+                        .HasColumnName("Quantidade");
 
-                    b.Property<decimal>("ValorUnitario")
+                    b.Property<decimal>("UnitPrice")
                         .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("ValorUnitario");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PedidoId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("ItensPedido", (string)null);
                 });
 
-            modelBuilder.Entity("CrudPedidos.Domain.Entities.Pedido", b =>
+            modelBuilder.Entity("CrudPedidos.Domain.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,52 +71,58 @@ namespace CrudPedidos.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataAtualizacao");
 
-                    b.Property<DateTime>("DataCriacao")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasColumnName("DataCriacao");
 
-                    b.Property<string>("EmailCliente")
+                    b.Property<string>("CustomerEmail")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("EmailCliente");
 
-                    b.Property<string>("NomeCliente")
+                    b.Property<string>("CustomerName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("NomeCliente");
 
-                    b.Property<bool>("Pago")
+                    b.Property<bool>("Paid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasDefaultValue(false)
+                        .HasColumnName("Pago");
 
-                    b.Property<decimal>("ValorTotal")
+                    b.Property<decimal>("TotalAmount")
                         .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("ValorTotal");
 
                     b.HasKey("Id");
 
                     b.ToTable("Pedidos", (string)null);
                 });
 
-            modelBuilder.Entity("CrudPedidos.Domain.Entities.ItemPedido", b =>
+            modelBuilder.Entity("CrudPedidos.Domain.Entities.OrderItem", b =>
                 {
-                    b.HasOne("CrudPedidos.Domain.Entities.Pedido", "Pedido")
-                        .WithMany("ItensPedidoList")
-                        .HasForeignKey("PedidoId")
+                    b.HasOne("CrudPedidos.Domain.Entities.Order", "Order")
+                        .WithMany("OrderItemsList")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Pedido");
+                    b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("CrudPedidos.Domain.Entities.Pedido", b =>
+            modelBuilder.Entity("CrudPedidos.Domain.Entities.Order", b =>
                 {
-                    b.Navigation("ItensPedidoList");
+                    b.Navigation("OrderItemsList");
                 });
 #pragma warning restore 612, 618
         }
