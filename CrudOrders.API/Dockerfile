@@ -3,18 +3,18 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0-preview AS build
 WORKDIR /src
 
 # Copy csproj files and restore
-COPY CrudPedidos.Domain/CrudPedidos.Domain.csproj CrudPedidos.Domain/
-COPY CrudPedidos.Application/CrudPedidos.Application.csproj CrudPedidos.Application/
-COPY CrudPedidos.Infrastructure/CrudPedidos.Infrastructure.csproj CrudPedidos.Infrastructure/
-COPY CrudPedidos.API/CrudPedidos.API.csproj CrudPedidos.API/
-RUN dotnet restore CrudPedidos.API/CrudPedidos.API.csproj
+COPY CrudOrders.Domain/CrudOrders.Domain.csproj CrudOrders.Domain/
+COPY CrudOrders.Application/CrudOrders.Application.csproj CrudOrders.Application/
+COPY CrudOrders.Infrastructure/CrudOrders.Infrastructure.csproj CrudOrders.Infrastructure/
+COPY CrudOrders.API/CrudOrders.API.csproj CrudOrders.API/
+RUN dotnet restore CrudOrders.API/CrudOrders.API.csproj
 
 # Copy source and publish
-COPY CrudPedidos.Domain/ CrudPedidos.Domain/
-COPY CrudPedidos.Application/ CrudPedidos.Application/
-COPY CrudPedidos.Infrastructure/ CrudPedidos.Infrastructure/
-COPY CrudPedidos.API/ CrudPedidos.API/
-RUN dotnet publish CrudPedidos.API/CrudPedidos.API.csproj -c Release -o /app/publish --no-restore
+COPY CrudOrders.Domain/ CrudOrders.Domain/
+COPY CrudOrders.Application/ CrudOrders.Application/
+COPY CrudOrders.Infrastructure/ CrudOrders.Infrastructure/
+COPY CrudOrders.API/ CrudOrders.API/
+RUN dotnet publish CrudOrders.API/CrudOrders.API.csproj -c Release -o /app/publish --no-restore
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview AS runtime
@@ -24,4 +24,4 @@ EXPOSE 8080
 
 COPY --from=build /app/publish .
 
-ENTRYPOINT ["dotnet", "CrudPedidos.API.dll"]
+ENTRYPOINT ["dotnet", "CrudOrders.API.dll"]

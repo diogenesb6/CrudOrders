@@ -20,58 +20,47 @@ public class CrudOrdersContext : DbContext
         modelBuilder.Entity<Order>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.ToTable("Pedidos");
+            entity.ToTable("Orders");
 
             entity.Property(e => e.CustomerName)
                 .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("NomeCliente");
+                .HasMaxLength(255);
 
             entity.Property(e => e.CustomerEmail)
                 .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("EmailCliente");
+                .HasMaxLength(255);
 
             entity.Property(e => e.Paid)
-                .HasDefaultValue(false)
-                .HasColumnName("Pago");
+                .HasDefaultValue(false);
 
             entity.Property(e => e.TotalAmount)
-                .HasPrecision(18, 2)
-                .HasColumnName("ValorTotal");
+                .HasPrecision(18, 2);
 
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()")
-                .HasColumnName("DataCriacao");
+                .HasDefaultValueSql("GETUTCDATE()");
 
-            entity.Property(e => e.UpdatedAt)
-                .HasColumnName("DataAtualizacao");
+            entity.Property(e => e.UpdatedAt);
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.ToTable("ItensPedido");
+            entity.ToTable("OrderItems");
 
-            entity.Property(e => e.ProductId)
-                .HasColumnName("IdProduto");
+            entity.Property(e => e.ProductId);
 
             entity.Property(e => e.ProductName)
                 .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("NomeProduto");
+                .HasMaxLength(255);
 
             entity.Property(e => e.UnitPrice)
-                .HasPrecision(18, 2)
-                .HasColumnName("ValorUnitario");
+                .HasPrecision(18, 2);
 
             entity.Property(e => e.Quantity)
-                .IsRequired()
-                .HasColumnName("Quantidade");
+                .IsRequired();
 
             entity.Property(e => e.OrderId)
-                .IsRequired()
-                .HasColumnName("PedidoId");
+                .IsRequired();
 
             entity.HasOne(i => i.Order)
                 .WithMany(p => p.OrderItemsList)

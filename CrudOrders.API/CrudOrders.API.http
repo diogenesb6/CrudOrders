@@ -1,6 +1,32 @@
 @CrudOrders.API_HostAddress = http://localhost:5234
 
-GET {{CrudOrders.API_HostAddress}}/weatherforecast/
+### Get all orders
+GET {{CrudOrders.API_HostAddress}}/api/orders
 Accept: application/json
+
+### Get order by id
+GET {{CrudOrders.API_HostAddress}}/api/orders/1
+Accept: application/json
+
+### Create order
+POST {{CrudOrders.API_HostAddress}}/api/orders
+Content-Type: application/json
+
+{
+  "customerName": "John Doe",
+  "customerEmail": "john@example.com",
+  "paid": false,
+  "orderItems": [
+    {
+      "productId": 1,
+      "productName": "Widget",
+      "unitPrice": 9.99,
+      "quantity": 2
+    }
+  ]
+}
+
+### Delete order
+DELETE {{CrudOrders.API_HostAddress}}/api/orders/1
 
 ###
