@@ -98,8 +98,8 @@ CrudOrders/
 ### 1. Clonar o Repositorio
 
 ```bash
-git clone https://github.com/diogenesb6/CrudPedidos.git
-cd CrudPedidos
+git clone https://github.com/diogenesb6/crudOrders.git
+cd crudOrders
 ```
 
 ### 2. Backend (API)
@@ -383,7 +383,7 @@ Este projeto esta licenciado sob a **MIT License**.
 ## Contato
 
 - **GitHub**: [@diogenesb6](https://github.com/diogenesb6)
-- **Repositorio**: [CrudOrders](https://github.com/diogenesb6/CrudPedidos)
+- **Repositorio**: [crudOrders](https://github.com/diogenesb6/crudOrders)
 
 ---
 
