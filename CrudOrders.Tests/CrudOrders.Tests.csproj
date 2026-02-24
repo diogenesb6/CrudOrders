@@ -26,4 +26,8 @@
     <ProjectReference Include="..\CrudOrders.API\CrudOrders.API.csproj" />
   </ItemGroup>
 
+  <Target Name="RunTestsAfterBuild" AfterTargets="Build">
+    <Exec Command="dotnet test $(MSBuildProjectFullPath) --no-build --no-restore --verbosity normal" EnvironmentVariables="DOTNET_CLI_UI_LANGUAGE=en" />
+  </Target>
+
 </Project>

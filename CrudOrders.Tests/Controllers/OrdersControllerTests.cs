@@ -28,8 +28,8 @@ public class OrdersControllerTests
             new OrderDTO
             {
                 Id = 1,
-                CustomerName = "João Silva",
-                CustomerEmail = "joao@example.com",
+                CustomerName = "John Silva",
+                CustomerEmail = "john@example.com",
                 Paid = false,
                 TotalAmount = 200.00m,
                 OrderItems = new List<OrderItemDTO>
@@ -38,7 +38,7 @@ public class OrdersControllerTests
                     {
                         Id = 1,
                         ProductId = 1,
-                        ProductName = "Produto A",
+                        ProductName = "Product A",
                         UnitPrice = 100.00m,
                         Quantity = 2
                     }
@@ -92,8 +92,8 @@ public class OrdersControllerTests
         var expectedOrder = new OrderDTO
         {
             Id = id,
-            CustomerName = "João Silva",
-            CustomerEmail = "joao@example.com",
+            CustomerName = "John Silva",
+            CustomerEmail = "john@example.com",
             Paid = false,
             TotalAmount = 200.00m,
             OrderItems = new List<OrderItemDTO>()
@@ -107,7 +107,7 @@ public class OrdersControllerTests
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         var order = Assert.IsType<OrderDTO>(okResult.Value);
         Assert.Equal(id, order.Id);
-        Assert.Equal("João Silva", order.CustomerName);
+        Assert.Equal("John Silva", order.CustomerName);
     }
 
     [Fact]
@@ -139,15 +139,15 @@ public class OrdersControllerTests
     {
         var createDto = new CreateOrderDTO
         {
-            CustomerName = "João Silva",
-            CustomerEmail = "joao@example.com",
+            CustomerName = "John Silva",
+            CustomerEmail = "john@example.com",
             Paid = false,
             OrderItems = new List<CreateOrderItemDTO>
             {
                 new CreateOrderItemDTO
                 {
                     ProductId = 1,
-                    ProductName = "Produto A",
+                    ProductName = "Product A",
                     UnitPrice = 100.00m,
                     Quantity = 2
                 }
@@ -180,7 +180,7 @@ public class OrdersControllerTests
         var createDto = new CreateOrderDTO
         {
             CustomerName = "",
-            CustomerEmail = "joao@example.com",
+            CustomerEmail = "john@example.com",
             Paid = false,
             OrderItems = new List<CreateOrderItemDTO>()
         };
@@ -198,8 +198,8 @@ public class OrdersControllerTests
     {
         var createDto = new CreateOrderDTO
         {
-            CustomerName = "João Silva",
-            CustomerEmail = "joao@example.com",
+            CustomerName = "John Silva",
+            CustomerEmail = "john@example.com",
             Paid = false,
             OrderItems = new List<CreateOrderItemDTO>()
         };
@@ -218,15 +218,15 @@ public class OrdersControllerTests
         int id = 1;
         var updateDto = new UpdateOrderDTO
         {
-            CustomerName = "João Silva Atualizado",
-            CustomerEmail = "joao.atualizado@example.com",
+            CustomerName = "John Silva Updated",
+            CustomerEmail = "john.updated@example.com",
             Paid = true,
             OrderItems = new List<CreateOrderItemDTO>
             {
                 new CreateOrderItemDTO
                 {
                     ProductId = 1,
-                    ProductName = "Produto A",
+                    ProductName = "Product A",
                     UnitPrice = 150.00m,
                     Quantity = 3
                 }
@@ -246,7 +246,7 @@ public class OrdersControllerTests
                 {
                     Id = 1,
                     ProductId = 1,
-                    ProductName = "Produto A",
+                    ProductName = "Product A",
                     UnitPrice = 150.00m,
                     Quantity = 3
                 }
@@ -261,7 +261,7 @@ public class OrdersControllerTests
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         var order = Assert.IsType<OrderDTO>(okResult.Value);
         Assert.Equal(id, order.Id);
-        Assert.Equal("João Silva Atualizado", order.CustomerName);
+        Assert.Equal("John Silva Updated", order.CustomerName);
         Assert.True(order.Paid);
         _orderServiceMock.Verify(s => s.UpdateAsync(id, updateDto), Times.Once);
     }
@@ -272,8 +272,8 @@ public class OrdersControllerTests
         int id = 999;
         var updateDto = new UpdateOrderDTO
         {
-            CustomerName = "João Silva",
-            CustomerEmail = "joao@example.com",
+            CustomerName = "John Silva",
+            CustomerEmail = "john@example.com",
             Paid = false,
             OrderItems = new List<CreateOrderItemDTO>()
         };
@@ -293,7 +293,7 @@ public class OrdersControllerTests
         var updateDto = new UpdateOrderDTO
         {
             CustomerName = "",
-            CustomerEmail = "joao@example.com",
+            CustomerEmail = "john@example.com",
             Paid = false,
             OrderItems = new List<CreateOrderItemDTO>()
         };
@@ -312,8 +312,8 @@ public class OrdersControllerTests
         int id = 0;
         var updateDto = new UpdateOrderDTO
         {
-            CustomerName = "João Silva",
-            CustomerEmail = "joao@example.com",
+            CustomerName = "John Silva",
+            CustomerEmail = "john@example.com",
             Paid = false,
             OrderItems = new List<CreateOrderItemDTO>()
         };
@@ -332,8 +332,8 @@ public class OrdersControllerTests
         int id = 1;
         var updateDto = new UpdateOrderDTO
         {
-            CustomerName = "João Silva",
-            CustomerEmail = "joao@example.com",
+            CustomerName = "John Silva",
+            CustomerEmail = "john@example.com",
             Paid = false,
             OrderItems = new List<CreateOrderItemDTO>()
         };
