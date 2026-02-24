@@ -273,15 +273,15 @@ POST /api/orders
 Content-Type: application/json
 
 {
-  "customerName": "John Doe",
-  "customerEmail": "john@example.com",
-  "paid": false,
-  "orderItems": [
+  "nomeCliente": "John Doe",
+  "emailCliente": "john@example.com",
+  "pago": false,
+  "itensPedido": [
     {
-      "productId": 1,
-      "productName": "Widget",
-      "unitPrice": 9.99,
-      "quantity": 2
+      "idProduto": 1,
+      "nomeProduto": "Widget",
+      "valorUnitario": 9.99,
+      "quantidade": 2
     }
   ]
 }
@@ -303,10 +303,10 @@ PUT /api/orders/{id}
 Content-Type: application/json
 
 {
-  "customerName": "John Doe",
-  "customerEmail": "john@example.com",
-  "paid": true,
-  "orderItems": [...]
+  "nomeCliente": "John Doe",
+  "emailCliente": "john@example.com",
+  "pago": true,
+  "itensPedido": [...]
 }
 ```
 
@@ -320,17 +320,17 @@ DELETE /api/orders/{id}
 ```json
 {
   "id": 1,
-  "customerName": "John Doe",
-  "customerEmail": "john@example.com",
-  "paid": true,
-  "totalAmount": 19.98,
-  "orderItems": [
+  "nomeCliente": "John Doe",
+  "emailCliente": "john@example.com",
+  "pago": true,
+  "valorTotal": 19.98,
+  "itensPedido": [
     {
       "id": 1,
-      "productId": 1,
-      "productName": "Widget",
-      "unitPrice": 9.99,
-      "quantity": 2
+      "idProduto": 1,
+      "nomeProduto": "Widget",
+      "valorUnitario": 9.99,
+      "quantidade": 2
     }
   ]
 }

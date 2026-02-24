@@ -13,15 +13,15 @@ POST {{CrudOrders.API_HostAddress}}/api/orders
 Content-Type: application/json
 
 {
-  "customerName": "John Doe",
-  "customerEmail": "john@example.com",
-  "paid": false,
-  "orderItems": [
+  "nomeCliente": "John Doe",
+  "emailCliente": "john@example.com",
+  "pago": false,
+  "itensPedido": [
     {
-      "productId": 1,
-      "productName": "Widget",
-      "unitPrice": 9.99,
-      "quantity": 2
+      "idProduto": 1,
+      "nomeProduto": "Widget",
+      "valorUnitario": 9.99,
+      "quantidade": 2
     }
   ]
 }
