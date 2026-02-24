@@ -167,13 +167,59 @@ dotnet test CrudOrders.slnx
 dotnet test CrudOrders.Tests
 ```
 
-### Cobertura
+### Resumo
 
 | Camada | Testes | Descricao |
 |--------|--------|-----------|
-| **Controller** | 16 | GET, POST, PUT, DELETE + cenarios de erro |
-| **Service** | 16 | Logica de negocio, validacoes, casos limite |
+| **Controller** | 16 | Testa os endpoints HTTP (respostas, status codes, erros) |
+| **Service** | 16 | Testa a logica de negocio (validacoes, regras, casos limite) |
 | **Total** | **32** | Todos passando |
+
+### Testes do Controller (OrdersControllerTests)
+
+Validam o comportamento dos endpoints HTTP da API, verificando status codes e respostas.
+
+| # | Teste | O que valida |
+|---|-------|-------------|
+| 1 | `GetAll_ShouldReturnOkWithOrderList` | Listar pedidos retorna 200 OK com a lista |
+| 2 | `GetAll_ShouldReturnEmptyList` | Listar pedidos retorna 200 OK com lista vazia quando nao ha pedidos |
+| 3 | `GetAll_WhenServiceThrowsException_ShouldReturnInternalServerError` | Erro interno no servico retorna 500 |
+| 4 | `GetById_WithValidId_ShouldReturnOkWithOrder` | Buscar pedido por ID valido retorna 200 OK com os dados |
+| 5 | `GetById_WithNonExistentId_ShouldReturnNotFound` | Buscar pedido inexistente retorna 404 Not Found |
+| 6 | `GetById_WithInvalidId_ShouldReturnBadRequest` | Buscar pedido com ID invalido (0 ou negativo) retorna 400 Bad Request |
+| 7 | `Create_WithValidData_ShouldReturnCreatedAtAction` | Criar pedido com dados validos retorna 201 Created |
+| 8 | `Create_WithEmptyCustomerName_ShouldReturnBadRequest` | Criar pedido sem nome do cliente retorna 400 |
+| 9 | `Create_WithNoItems_ShouldReturnBadRequest` | Criar pedido sem itens retorna 400 |
+| 10 | `Update_WithValidData_ShouldReturnOkWithUpdatedOrder` | Atualizar pedido com dados validos retorna 200 OK |
+| 11 | `Update_WithNonExistentId_ShouldReturnNotFound` | Atualizar pedido inexistente retorna 404 |
+| 12 | `Update_WithEmptyCustomerName_ShouldReturnBadRequest` | Atualizar pedido sem nome do cliente retorna 400 |
+| 13 | `Update_WithInvalidId_ShouldReturnBadRequest` | Atualizar pedido com ID invalido retorna 400 |
+| 14 | `Update_WhenServiceThrowsException_ShouldReturnInternalServerError` | Erro interno ao atualizar retorna 500 |
+| 15 | `Delete_WithValidId_ShouldReturnNoContent` | Deletar pedido existente retorna 204 No Content |
+| 16 | `Delete_WithNonExistentId_ShouldReturnNotFound` | Deletar pedido inexistente retorna 404 |
+
+### Testes do Service (OrderServiceTests)
+
+Validam a logica de negocio, validacoes de entrada e interacao com o repositorio.
+
+| # | Teste | O que valida |
+|---|-------|-------------|
+| 1 | `GetByIdAsync_WithValidId_ShouldReturnOrder` | Buscar por ID valido retorna o pedido mapeado corretamente |
+| 2 | `GetByIdAsync_WithInvalidId_ShouldThrowArgumentException` | ID zero ou negativo lanca excecao de argumento |
+| 3 | `GetByIdAsync_WithNonExistentId_ShouldReturnNull` | ID inexistente no banco retorna null |
+| 4 | `GetAllAsync_ShouldReturnOrderList` | Listar todos retorna a lista mapeada corretamente |
+| 5 | `GetAllAsync_WhenEmpty_ShouldReturnEmptyList` | Listar quando nao ha pedidos retorna lista vazia |
+| 6 | `CreateAsync_WithValidData_ShouldReturnCreatedOrder` | Criar com dados validos persiste e retorna o pedido com total calculado |
+| 7 | `CreateAsync_WithEmptyCustomerName_ShouldThrowArgumentException` | Criar sem nome do cliente lanca excecao |
+| 8 | `CreateAsync_WithNoItems_ShouldThrowArgumentException` | Criar sem itens lanca excecao |
+| 9 | `CreateAsync_WithNegativeUnitPrice_ShouldThrowArgumentException` | Criar com preco unitario negativo lanca excecao |
+| 10 | `UpdateAsync_WithValidData_ShouldReturnUpdatedOrder` | Atualizar com dados validos persiste e retorna o pedido atualizado |
+| 11 | `UpdateAsync_WithInvalidId_ShouldThrowArgumentException` | Atualizar com ID invalido lanca excecao |
+| 12 | `UpdateAsync_WithNonExistentId_ShouldThrowInvalidOperationException` | Atualizar pedido inexistente lanca excecao de operacao invalida |
+| 13 | `UpdateAsync_WithEmptyCustomerName_ShouldThrowArgumentException` | Atualizar sem nome do cliente lanca excecao |
+| 14 | `UpdateAsync_WithEmptyCustomerEmail_ShouldThrowArgumentException` | Atualizar sem email do cliente lanca excecao |
+| 15 | `DeleteAsync_WithValidId_ShouldReturnTrue` | Deletar pedido existente retorna true |
+| 16 | `DeleteAsync_WithNonExistentId_ShouldThrowInvalidOperationException` | Deletar pedido inexistente lanca excecao |
 
 ---
 
