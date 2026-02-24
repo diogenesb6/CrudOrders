@@ -56,6 +56,18 @@ public class OrderService : IOrderService
 
         order.UpdateOrder(dto.CustomerName, dto.CustomerEmail, dto.Paid);
 
+        var newItems = dto.OrderItems?.Select(i => new OrderItem(
+            i.ProductId, i.ProductName, i.UnitPrice, i.Quantity
+        )).ToList() ?? new List<OrderItem>();
+
+        order.OrderItemsList.Clear();
+        foreach (var item in newItems)
+        {
+            item.OrderId = order.Id;
+            order.OrderItemsList.Add(item);
+        }
+        order.CalculateTotalAmount();
+
         var updatedOrder = await _repository.UpdateAsync(order);
         return _mapper.Map<OrderDTO>(updatedOrder);
     }

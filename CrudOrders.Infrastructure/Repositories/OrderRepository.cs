@@ -45,6 +45,11 @@ public class OrderRepository : IOrderRepository
         if (order == null)
             throw new ArgumentNullException(nameof(order));
 
+        var existingItems = await _context.OrderItems
+            .Where(i => i.OrderId == order.Id)
+            .ToListAsync();
+
+        _context.OrderItems.RemoveRange(existingItems);
         _context.Orders.Update(order);
         await _context.SaveChangesAsync();
 
