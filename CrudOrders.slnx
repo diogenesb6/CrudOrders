@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="CrudOrders.API/CrudOrders.API.csproj" />
+  <Project Path="CrudOrders.Application/CrudOrders.Application.csproj" />
+  <Project Path="CrudOrders.Domain/CrudOrders.Domain.csproj" />
+  <Project Path="CrudOrders.Infrastructure/CrudOrders.Infrastructure.csproj" />
+  <Project Path="CrudOrders.Tests/CrudOrders.Tests.csproj" />
+</Solution>

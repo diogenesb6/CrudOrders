@@ -1,363 +1,287 @@
-# CrudPedidos - Aplicação de Gerenciamento de Pedidos
+# CrudOrders - Gerenciamento de Pedidos
 
-[![Status](https://img.shields.io/badge/Status-Backend%20%2B%20Frontend%20%2B%20Docker%20Conclu%C3%ADdos-brightgreen)]()
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ed)]()
 [![.NET](https://img.shields.io/badge/.NET-10.0-blue)]()
 [![React](https://img.shields.io/badge/React-19-61dafb)]()
 [![Vite](https://img.shields.io/badge/Vite-6-646cff)]()
 [![Node](https://img.shields.io/badge/Node-22-339933)]()
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ed)]()
 [![License](https://img.shields.io/badge/License-MIT-green)]()
 
-## 📋 Descrição do Projeto
+## Descricao
 
-Aplicação completa com backend em **.NET (API REST)** e frontend em **React** para gerenciar pedidos com CRUD completo, seguindo boas práticas de arquitetura **(Clean Architecture, DDD, SOLID, Clean Code)** e **testes unitários**.
-
----
-
-## 📊 STATUS DE IMPLEMENTAÇÃO
-
-### ✅ BACKEND - .NET API
-
-#### **1. Estrutura Clean Architecture**
-
-| Componente | Status | Descrição |
-|-----------|--------|-----------|
-| **CrudPedidos.Domain** | ✅ Concluído | Camada de domínio (entidades, value objects, interfaces) |
-| **CrudPedidos.Application** | ✅ Concluído | DTOs, serviços e casos de uso |
-| **CrudPedidos.Infrastructure** | ✅ Concluído | Repositórios, DbContext, migrations, configurações EF |
-| **CrudPedidos.API** | ✅ Concluído | Controllers, middlewares, Program.cs |
-
-#### **2. Entidades de Domínio**
-
-| Entidade | Status | Detalhes |
-|----------|--------|---------|
-| **Pedido** | ✅ Concluído | Id, NomeCliente, EmailCliente, Pago, ValorTotal, ItensPedido |
-| **ItemPedido** | ✅ Concluído | Id, IdProduto, NomeProduto, ValorUnitario, Quantidade |
-
-#### **3. Funcionalidades CRUD**
-
-| Endpoint | Método | Status | Detalhes |
-|----------|--------|--------|---------|
-| `/api/pedidos` | POST | ✅ Concluído | Criar novo pedido com itens |
-| `/api/pedidos` | GET | ✅ Concluído | Listar todos os pedidos |
-| `/api/pedidos/{id}` | GET | ✅ Concluído | Obter pedido específico |
-| `/api/pedidos/{id}` | PUT | ✅ Concluído | Atualizar pedido |
-| `/api/pedidos/{id}` | DELETE | ✅ Concluído | Remover pedido |
-
-#### **4. Validações**
-
-| Validação | Status | Detalhes |
-|-----------|--------|---------|
-| NomeCliente obrigatório | ✅ Concluído | Validação em Application Service |
-| EmailCliente obrigatório | ✅ Concluído | Validação em Application Service |
-| ItensPedido (mínimo 1 item) | ✅ Concluído | Validação em Application Service |
-| Quantidade > 0 | ✅ Concluído | Validação em Domain Entity |
-| ValorUnitario > 0 | ✅ Concluído | Validação em Domain Entity |
-
-#### **5. Banco de Dados**
-
-| Componente | Status | Detalhes |
-|-----------|--------|---------|
-| **Entity Framework Core** | ✅ Concluído | DbContext configurado com suporte a SQL Server e InMemory |
-| **Migrations** | ✅ Concluído | Migration inicial `InitialCreate` com tabelas Pedidos e ItensPedido |
-| **DesignTimeDbContextFactory** | ✅ Concluído | Factory para suporte a migrações em tempo de design |
-| **SQL Server/InMemory** | ✅ Concluído | Suporte para ambos com tratamento condicional em Program.cs |
-
-#### **6. Documentação API**
-
-| Componente | Status | Detalhes |
-|-----------|--------|---------|
-| **Swagger** | ✅ Concluído | Habilitado e funcionando em `/swagger` |
-| **Documentação** | ✅ Concluído | Endpoints documentados com comentários XML |
-
-#### **7. Testes Unitários**
-
-| Teste | Status | Detalhes |
-|-------|--------|---------|
-| **Testes CRUD Pedidos (Controller)** | ✅ Concluído | xUnit + Mocks (16 testes) |
-| **Testes CRUD Pedidos (Service)** | ✅ Concluído | xUnit + Mocks (16 testes) |
-| **Mocks de Repositórios** | ✅ Concluído | Moq Framework configurado |
-| **Total de Testes** | ✅ Concluído | **32 testes passando** |
+Aplicacao completa com backend em **.NET 10 (API REST)** e frontend em **React 19** para gerenciar pedidos com CRUD completo, seguindo boas praticas de arquitetura **(Clean Architecture, DDD, SOLID, Clean Code)** com **32 testes unitarios automatizados**.
 
 ---
 
-### ✅ FRONTEND - React
+## Arquitetura do Projeto
 
-#### **1. Estrutura do Projeto**
-
-| Componente | Status | Detalhes |
-|-----------|--------|---------|
-| **React 19 + Vite 6** | ✅ Concluído | TypeScript, React Router v7, Fetch API |
-| **Estrutura de Pastas** | ✅ Concluído | components, services, types |
-
-#### **2. Funcionalidades**
-
-| Funcionalidade | Status | Detalhes |
-|----------------|--------|---------|
-| **Listagem de Pedidos** | ✅ Concluído | Tabela com dados completos, badges de status |
-| **Criar Pedido** | ✅ Concluído | Formulário dinâmico com adição/remoção de itens |
-| **Editar Pedido** | ✅ Concluído | Carrega dados existentes e atualiza |
-| **Deletar Pedido** | ✅ Concluído | Com confirmação via dialog |
-| **Exibição de ValorTotal** | ✅ Concluído | Valor total exibido na listagem (calculado pela API) |
-
-#### **3. Integração com API**
-
-| Integração | Status | Detalhes |
-|-----------|--------|---------|
-| **Serviço Fetch API** | ✅ Concluído | Cliente HTTP com tratamento de erros |
-| **Endpoints CRUD** | ✅ Concluído | Todos os 5 endpoints integrados |
-| **Tratamento de Erros** | ✅ Concluído | Mensagens de erro exibidas ao usuário |
-| **Proxy Vite** | ✅ Concluído | `/api/*` redirecionado para API .NET |
-| **CORS** | ✅ Concluído | Configurado no backend para `localhost:5173` |
-
----
-
-### ✅ INFRAESTRUTURA
-
-| Componente | Status | Detalhes |
-|-----------|--------|---------|
-| **Dockerfile API** | ✅ Concluído | Multi-stage build: SDK → publish → ASP.NET 10 runtime (porta 8080) |
-| **Dockerfile Frontend** | ✅ Concluído | Multi-stage build: Node 22 → Vite build → Nginx serve |
-| **nginx.conf** | ✅ Concluído | SPA routing + proxy reverso `/api/` → container API |
-| **docker-compose.yml** | ✅ Concluído | 3 serviços: SQL Server 2022 + API .NET + Frontend Nginx |
-| **.dockerignore** | ✅ Concluído | API e Frontend com ignores otimizados |
-| **Healthcheck SQL** | ✅ Concluído | API aguarda SQL Server ficar saudável antes de iniciar |
-| **Migration automática** | ✅ Concluído | EF Core aplica migrations ao iniciar em Production |
-| **Deploy Cloud** | ⏳ Opcional | Não deployado em Azure/AWS/Heroku |
-
----
-
-## 🏗️ ARQUITETURA DO PROJETO
-
-### Estrutura de Diretórios
+### Estrutura de Diretorios
 
 ```
-CrudPedidos/
-├── docker-compose.yml               # Orquestra API + Frontend + SQL Server
-├── .dockerignore                    # Ignora bin/, obj/, node_modules/, tests
-├── CrudPedidos.Domain/              # Camada de Domínio
-│   ├── Entities/                    # Entidades (Pedido, ItemPedido)
-│   ├── ValueObjects/                # Value Objects
-│   └── Interfaces/                  # Interfaces de repositório
-├── CrudPedidos.Application/         # Camada de Aplicação
-│   ├── DTOs/                        # Data Transfer Objects
-│   ├── Services/                    # Lógica de negócio
-│   ├── Interfaces/                  # Interfaces de serviços
-│   └── Mappings/                    # AutoMapper profiles
-├── CrudPedidos.Infrastructure/      # Camada de Infraestrutura
-│   ├── Data/                        # DbContext
-│   ├── Repositories/                # Implementações de repositório
-│   ├── Migrations/                  # EF Core Migrations
-│   └── DependencyInjection/         # Configuração de DI
-├── CrudPedidos.API/                 # Camada de Apresentação
-│   ├── Controllers/                 # Controllers da API
-│   ├── Dockerfile                   # Multi-stage build .NET 10
-│   └── Program.cs                   # Configuração inicial
-├── CrudPedidos.Tests/               # Testes Unitários
-│   ├── Controllers/                 # Testes de controller
-│   └── Services/                    # Testes de serviço
-└── frontend/                        # Frontend React + TypeScript + Vite
-    ├── Dockerfile                   # Multi-stage build Node 22 + Nginx
-    ├── nginx.conf                   # SPA routing + proxy reverso /api/
-    ├── .dockerignore                # Ignora node_modules/, dist/
-    ├── index.html                   # Entry point HTML
-    ├── vite.config.ts               # Configuração Vite (proxy, porta)
-    ├── tsconfig.json                # Configuração TypeScript
-    ├── package.json                 # Dependências React 19, Vite 6
+CrudOrders/
+├── CrudOrders.slnx                   # Solution
+├── docker-compose.yml                # Orquestra API + Frontend + SQL Server
+├── CrudOrders.Domain/                # Camada de Dominio
+│   ├── Entities/                     # Order, OrderItem
+│   ├── Interfaces/                   # IOrderRepository
+│   └── Resources/                    # Mensagens de validacao
+├── CrudOrders.Application/           # Camada de Aplicacao
+│   ├── DTOs/                         # CreateOrderDTO, UpdateOrderDTO, OrderDTO, OrderItemDTO
+│   ├── Services/                     # OrderService
+│   ├── Interfaces/                   # IOrderService
+│   └── Mappings/                     # AutoMapper profiles
+├── CrudOrders.Infrastructure/        # Camada de Infraestrutura
+│   ├── Data/                         # CrudOrdersContext, DesignTimeDbContextFactory
+│   ├── Repositories/                 # OrderRepository
+│   ├── Migrations/                   # EF Core Migrations
+│   └── DependencyInjection/          # ServiceCollectionExtensions
+├── CrudOrders.API/                   # Camada de Apresentacao
+│   ├── Controllers/                  # OrdersController
+│   ├── Resources/                    # Mensagens da API
+│   ├── Dockerfile                    # Multi-stage build .NET 10
+│   └── Program.cs                    # Configuracao inicial + CORS
+├── CrudOrders.Tests/                 # Testes Unitarios
+│   ├── Controllers/                  # OrdersControllerTests (16 testes)
+│   └── Services/                     # OrderServiceTests (16 testes)
+└── frontend/                         # Frontend React 19 + Vite 6
+    ├── index.html                    # Entry point (Google Fonts Inter)
+    ├── vite.config.js                # Proxy /api -> localhost:5234
+    ├── package.json                  # React 19, Vite 6, React Router 7
     └── src/
-        ├── main.tsx                 # Entry point React
-        ├── App.tsx                  # Rotas e layout principal
-        ├── App.css                  # Estilos globais e botões
-        ├── index.css                # Reset CSS
-        ├── components/              # Componentes React
-        │   ├── PedidoList.tsx        # Listagem de pedidos (tabela)
-        │   ├── PedidoList.css
-        │   ├── PedidoForm.tsx        # Formulário criar/editar pedido
-        │   └── PedidoForm.css
-        ├── services/
-        │   └── api.ts               # Cliente HTTP (Fetch API)
-        └── types/
-            └── pedido.ts            # Interfaces TypeScript (DTOs)
+        ├── main.jsx                  # Entry point React
+        ├── App.jsx                   # Rotas e layout (header + navegacao)
+        ├── index.css                 # CSS puro (cards, tabelas, badges, forms)
+        ├── api/
+        │   └── ordersApi.js          # Cliente HTTP (Fetch API)
+        └── components/
+            ├── OrderList.jsx         # Listagem com toggle Paid/Unpaid e Delete inline
+            ├── OrderForm.jsx         # Formulario criar/editar com itens dinamicos
+            └── OrderDetails.jsx      # Detalhes do pedido
 ```
 
 ---
 
-## 🛠️ TECNOLOGIAS
+## Tecnologias
 
 ### Backend
-- **Framework**: .NET 10.0
-- **ORM**: Entity Framework Core
-- **Banco de Dados**: SQL Server (ou InMemory para dev)
-- **API Documentation**: Swagger/OpenAPI
-- **Testes**: xUnit + Moq
-- **Padrões**: Clean Architecture, DDD, SOLID
+- **.NET 10.0** com ASP.NET Core
+- **Entity Framework Core** (SQL Server)
+- **AutoMapper** para mapeamento de DTOs
+- **Swagger/OpenAPI** para documentacao
+- **xUnit + Moq** para testes unitarios
 
 ### Frontend
-- **Framework**: React 19
-- **Build Tool**: Vite 6
-- **Linguagem**: TypeScript 5.8
-- **HTTP Client**: Fetch API nativa
-- **Roteamento**: React Router v7
-- **Estilos**: CSS puro
+- **React 19** com JSX
+- **Vite 6** como build tool
+- **React Router v7** para navegacao
+- **Fetch API** nativa para chamadas HTTP
+- **CSS puro** (sem frameworks CSS)
 
 ### Infraestrutura
-- **Containerização**: Docker & Docker Compose
-- **Web Server**: Nginx (frontend em produção)
-- **Banco de Dados Docker**: SQL Server 2022
-- **Cloud**: Azure/AWS/Heroku (opcional)
+- **Docker & Docker Compose**
+- **Nginx** (frontend em producao)
+- **SQL Server 2022**
 
 ---
 
-## 📋 REQUISITOS
+## Requisitos
 
 - **.NET 10.0** ou superior
-- **Node.js 22.0** ou superior
-- **npm 10.0** ou superior
-- **SQL Server 2019+** (ou InMemory para dev)
-- **Docker** (opcional, para containerização)
+- **Node.js 22** ou superior
+- **SQL Server** (ou InMemory para dev)
+- **Docker** (opcional)
 
 ---
 
-## 🚀 COMEÇANDO
+## Como Executar
 
-### 1. Clonar o Repositório
+### 1. Clonar o Repositorio
 
 ```bash
 git clone https://github.com/diogenesb6/CrudPedidos.git
 cd CrudPedidos
 ```
 
-### 2. Configurar Backend
+### 2. Backend (API)
 
 ```bash
-# Restaurar dependências
-dotnet restore
+# Restaurar dependencias
+dotnet restore CrudOrders.slnx
 
-# Aplicar migrations
-dotnet ef database update -p CrudPedidos.Infrastructure -s CrudPedidos.API
+# Aplicar migrations (criar banco)
+dotnet ef database update --project CrudOrders.Infrastructure --startup-project CrudOrders.API
 
 # Executar a API
-dotnet run --project CrudPedidos.API
+dotnet run --project CrudOrders.API
 ```
 
-**URL da API**: `http://localhost:5234`  
-**Swagger**: `http://localhost:5234/swagger`
+| Recurso | URL |
+|---------|-----|
+| **API** | `http://localhost:5234` |
+| **Swagger** | `http://localhost:5234/swagger` |
 
-#### Criar Novas Migrations
-
-```bash
-# Adicionar nova migration
-dotnet ef migrations add NomeDaMigration -p CrudPedidos.Infrastructure -s CrudPedidos.API
-
-# Remover última migration
-dotnet ef migrations remove -p CrudPedidos.Infrastructure -s CrudPedidos.API
-```
-
-### 3. Configurar Frontend
+### 3. Frontend
 
 ```bash
 cd frontend
 
-# Instalar dependências
+# Instalar dependencias
 npm install
 
 # Iniciar servidor de desenvolvimento
 npm run dev
 ```
 
-**URL do Frontend**: `http://localhost:5173`
+| Recurso | URL |
+|---------|-----|
+| **Frontend** | `http://localhost:5173` |
 
-> ⚠️ A API precisa estar rodando simultaneamente para o frontend funcionar. O Vite faz proxy automático de `/api/*` para `http://localhost:5234`.
+> O Vite faz proxy automatico de `/api/*` para `http://localhost:5234`. A API precisa estar rodando.
 
-### 4. Executar com Docker Compose
+### 4. Docker Compose (opcional)
 
 ```bash
 docker-compose up --build
 ```
 
-| Serviço | URL | Descrição |
-|---------|-----|-----------|
-| **Frontend** | `http://localhost:5173` | React via Nginx (proxy reverso para API) |
-| **API** | `http://localhost:5234` | ASP.NET 10 |
-| **Swagger** | `http://localhost:5234/swagger` | Documentação interativa |
-| **SQL Server** | `localhost:1433` | Usuário: `sa` / Senha: `CrudPedidos@2025` |
+| Servico | URL |
+|---------|-----|
+| **Frontend** | `http://localhost:5173` |
+| **API** | `http://localhost:5234` |
+| **Swagger** | `http://localhost:5234/swagger` |
+| **SQL Server** | `localhost:1433` |
 
-> A API aguarda o SQL Server ficar saudável (healthcheck) antes de iniciar e aplica as migrations automaticamente.
+> A API aguarda o SQL Server ficar saudavel (healthcheck) e aplica migrations automaticamente.
 
 ---
 
-## 🧪 TESTES
+## Testes Unitarios
 
-### Executar Testes Unitários
+Os testes rodam **automaticamente apos cada build**. Tambem podem ser executados manualmente:
 
 ```bash
 # Todos os testes
-dotnet test
+dotnet test CrudOrders.slnx
 
-# Apenas testes do CrudPedidos.Tests
-dotnet test CrudPedidos.Tests
+# Apenas o projeto de testes
+dotnet test CrudOrders.Tests
+```
+
+### Resumo
+
+| Camada | Testes | Descricao |
+|--------|--------|-----------|
+| **Controller** | 16 | Testa os endpoints HTTP (respostas, status codes, erros) |
+| **Service** | 16 | Testa a logica de negocio (validacoes, regras, casos limite) |
+| **Total** | **32** | Todos passando |
+
+### Testes do Controller (OrdersControllerTests)
+
+Validam o comportamento dos endpoints HTTP da API, verificando status codes e respostas.
+
+| # | Teste | O que valida |
+|---|-------|-------------|
+| 1 | `GetAll_ShouldReturnOkWithOrderList` | Listar pedidos retorna 200 OK com a lista |
+| 2 | `GetAll_ShouldReturnEmptyList` | Listar pedidos retorna 200 OK com lista vazia quando nao ha pedidos |
+| 3 | `GetAll_WhenServiceThrowsException_ShouldReturnInternalServerError` | Erro interno no servico retorna 500 |
+| 4 | `GetById_WithValidId_ShouldReturnOkWithOrder` | Buscar pedido por ID valido retorna 200 OK com os dados |
+| 5 | `GetById_WithNonExistentId_ShouldReturnNotFound` | Buscar pedido inexistente retorna 404 Not Found |
+| 6 | `GetById_WithInvalidId_ShouldReturnBadRequest` | Buscar pedido com ID invalido (0 ou negativo) retorna 400 Bad Request |
+| 7 | `Create_WithValidData_ShouldReturnCreatedAtAction` | Criar pedido com dados validos retorna 201 Created |
+| 8 | `Create_WithEmptyCustomerName_ShouldReturnBadRequest` | Criar pedido sem nome do cliente retorna 400 |
+| 9 | `Create_WithNoItems_ShouldReturnBadRequest` | Criar pedido sem itens retorna 400 |
+| 10 | `Update_WithValidData_ShouldReturnOkWithUpdatedOrder` | Atualizar pedido com dados validos retorna 200 OK |
+| 11 | `Update_WithNonExistentId_ShouldReturnNotFound` | Atualizar pedido inexistente retorna 404 |
+| 12 | `Update_WithEmptyCustomerName_ShouldReturnBadRequest` | Atualizar pedido sem nome do cliente retorna 400 |
+| 13 | `Update_WithInvalidId_ShouldReturnBadRequest` | Atualizar pedido com ID invalido retorna 400 |
+| 14 | `Update_WhenServiceThrowsException_ShouldReturnInternalServerError` | Erro interno ao atualizar retorna 500 |
+| 15 | `Delete_WithValidId_ShouldReturnNoContent` | Deletar pedido existente retorna 204 No Content |
+| 16 | `Delete_WithNonExistentId_ShouldReturnNotFound` | Deletar pedido inexistente retorna 404 |
+
+### Testes do Service (OrderServiceTests)
+
+Validam a logica de negocio, validacoes de entrada e interacao com o repositorio.
+
+| # | Teste | O que valida |
+|---|-------|-------------|
+| 1 | `GetByIdAsync_WithValidId_ShouldReturnOrder` | Buscar por ID valido retorna o pedido mapeado corretamente |
+| 2 | `GetByIdAsync_WithInvalidId_ShouldThrowArgumentException` | ID zero ou negativo lanca excecao de argumento |
+| 3 | `GetByIdAsync_WithNonExistentId_ShouldReturnNull` | ID inexistente no banco retorna null |
+| 4 | `GetAllAsync_ShouldReturnOrderList` | Listar todos retorna a lista mapeada corretamente |
+| 5 | `GetAllAsync_WhenEmpty_ShouldReturnEmptyList` | Listar quando nao ha pedidos retorna lista vazia |
+| 6 | `CreateAsync_WithValidData_ShouldReturnCreatedOrder` | Criar com dados validos persiste e retorna o pedido com total calculado |
+| 7 | `CreateAsync_WithEmptyCustomerName_ShouldThrowArgumentException` | Criar sem nome do cliente lanca excecao |
+| 8 | `CreateAsync_WithNoItems_ShouldThrowArgumentException` | Criar sem itens lanca excecao |
+| 9 | `CreateAsync_WithNegativeUnitPrice_ShouldThrowArgumentException` | Criar com preco unitario negativo lanca excecao |
+| 10 | `UpdateAsync_WithValidData_ShouldReturnUpdatedOrder` | Atualizar com dados validos persiste e retorna o pedido atualizado |
+| 11 | `UpdateAsync_WithInvalidId_ShouldThrowArgumentException` | Atualizar com ID invalido lanca excecao |
+| 12 | `UpdateAsync_WithNonExistentId_ShouldThrowInvalidOperationException` | Atualizar pedido inexistente lanca excecao de operacao invalida |
+| 13 | `UpdateAsync_WithEmptyCustomerName_ShouldThrowArgumentException` | Atualizar sem nome do cliente lanca excecao |
+| 14 | `UpdateAsync_WithEmptyCustomerEmail_ShouldThrowArgumentException` | Atualizar sem email do cliente lanca excecao |
+| 15 | `DeleteAsync_WithValidId_ShouldReturnTrue` | Deletar pedido existente retorna true |
+| 16 | `DeleteAsync_WithNonExistentId_ShouldThrowInvalidOperationException` | Deletar pedido inexistente lanca excecao |
+
+---
+
+## Banco de Dados
+
+### Tabela: Orders
+
+| Coluna | Tipo | Restricoes |
+|--------|------|-----------|
+| Id | int | PK, Auto-increment |
+| CustomerName | nvarchar(255) | NOT NULL |
+| CustomerEmail | nvarchar(255) | NOT NULL |
+| Paid | bit | NOT NULL, DEFAULT: false |
+| TotalAmount | decimal(18,2) | NOT NULL |
+| CreatedAt | datetime2 | NOT NULL, DEFAULT: GETUTCDATE() |
+| UpdatedAt | datetime2 | NULL |
+
+### Tabela: OrderItems
+
+| Coluna | Tipo | Restricoes |
+|--------|------|-----------|
+| Id | int | PK, Auto-increment |
+| ProductId | int | NOT NULL |
+| ProductName | nvarchar(255) | NOT NULL |
+| UnitPrice | decimal(18,2) | NOT NULL |
+| Quantity | int | NOT NULL |
+| OrderId | int | NOT NULL, FK -> Orders.Id (CASCADE) |
+
+**Relacionamento**: Um pedido pode ter multiplos itens. Ao deletar um pedido, todos os itens sao removidos automaticamente.
+
+### Migrations
+
+```bash
+# Criar nova migration
+dotnet ef migrations add NomeDaMigration --project CrudOrders.Infrastructure --startup-project CrudOrders.API
+
+# Aplicar migrations
+dotnet ef database update --project CrudOrders.Infrastructure --startup-project CrudOrders.API
+
+# Remover ultima migration
+dotnet ef migrations remove --project CrudOrders.Infrastructure --startup-project CrudOrders.API
 ```
 
 ---
 
-## 🗄️ BANCO DE DADOS
-
-### Schema - Tabelas
-
-#### **Tabela: Pedidos**
-
-| Coluna | Tipo | Restrições | Descrição |
-|--------|------|-----------|-----------|
-| **Id** | int | PK, Auto-increment | Identificador único do pedido |
-| **NomeCliente** | nvarchar(255) | NOT NULL | Nome do cliente |
-| **EmailCliente** | nvarchar(255) | NOT NULL | Email do cliente |
-| **Pago** | bit | NOT NULL, DEFAULT: 0 | Status de pagamento |
-| **ValorTotal** | decimal(18,2) | NOT NULL | Valor total do pedido (soma dos itens) |
-| **DataCriacao** | datetime2 | NOT NULL, DEFAULT: GETUTCDATE() | Data de criação do pedido |
-| **DataAtualizacao** | datetime2 | NULL | Data da última atualização |
-
-#### **Tabela: ItensPedido**
-
-| Coluna | Tipo | Restrições | Descrição |
-|--------|------|-----------|-----------|
-| **Id** | int | PK, Auto-increment | Identificador único do item |
-| **IdProduto** | int | NOT NULL | ID externo do produto |
-| **NomeProduto** | nvarchar(255) | NOT NULL | Nome do produto |
-| **ValorUnitario** | decimal(18,2) | NOT NULL | Preço unitário do produto |
-| **Quantidade** | int | NOT NULL | Quantidade solicitada |
-| **PedidoId** | int | NOT NULL, FK → Pedidos.Id | Chave estrangeira para Pedido |
-
-### Relacionamento
-
-- **One-to-Many**: Um Pedido pode ter múltiplos ItensPedido
-- **Delete Cascade**: Ao deletar um Pedido, todos seus itens são removidos automaticamente
-
-### Migrations Aplicadas
-
-#### ✅ InitialCreate
-- Criação das tabelas `Pedidos` e `ItensPedido`
-- Configuração de chaves primárias e estrangeiras
-- Índices para melhor desempenho
-
----
-
-## 📝 API - Endpoints
+## API - Endpoints
 
 ### Criar Pedido
 ```http
-POST /api/pedidos
+POST /api/orders
 Content-Type: application/json
 
 {
-  "nomeCliente": "João Silva",
-  "emailCliente": "joao@example.com",
-  "pago": false,
-  "itensPedido": [
+  "customerName": "John Doe",
+  "customerEmail": "john@example.com",
+  "paid": false,
+  "orderItems": [
     {
-      "idProduto": 1,
-      "nomeProduto": "Produto A",
-      "valorUnitario": 100.00,
-      "quantidade": 2
+      "productId": 1,
+      "productName": "Widget",
+      "unitPrice": 9.99,
+      "quantity": 2
     }
   ]
 }
@@ -365,50 +289,48 @@ Content-Type: application/json
 
 ### Listar Pedidos
 ```http
-GET /api/pedidos
+GET /api/orders
 ```
 
 ### Obter Pedido
 ```http
-GET /api/pedidos/{id}
+GET /api/orders/{id}
 ```
 
 ### Atualizar Pedido
 ```http
-PUT /api/pedidos/{id}
+PUT /api/orders/{id}
 Content-Type: application/json
 
 {
-  "nomeCliente": "João Silva",
-  "emailCliente": "joao@example.com",
-  "pago": true,
-  "itensPedido": [...]
+  "customerName": "John Doe",
+  "customerEmail": "john@example.com",
+  "paid": true,
+  "orderItems": [...]
 }
 ```
 
 ### Deletar Pedido
 ```http
-DELETE /api/pedidos/{id}
+DELETE /api/orders/{id}
 ```
 
----
-
-## 📦 JSON de Resposta (GET)
+### Resposta (GET)
 
 ```json
 {
   "id": 1,
-  "nomeCliente": "João Silva",
-  "emailCliente": "joao@example.com",
-  "pago": true,
-  "valorTotal": 200.00,
-  "itensPedido": [
+  "customerName": "John Doe",
+  "customerEmail": "john@example.com",
+  "paid": true,
+  "totalAmount": 19.98,
+  "orderItems": [
     {
       "id": 1,
-      "idProduto": 1,
-      "nomeProduto": "Produto A",
-      "valorUnitario": 100.00,
-      "quantidade": 2
+      "productId": 1,
+      "productName": "Widget",
+      "unitPrice": 9.99,
+      "quantity": 2
     }
   ]
 }
@@ -416,113 +338,60 @@ DELETE /api/pedidos/{id}
 
 ---
 
-## 🎯 CHECKLIST DOS REQUISITOS ORIGINAIS
+## Funcionalidades do Frontend
 
-### ✅ OBRIGATÓRIO (Eliminatório)
-
-| # | Requisito | Status | Evidência |
-|---|-----------|--------|-----------|
-| 1 | Projeto compilando com sucesso | ✅ Concluído | Backend .NET 10 e Frontend TypeScript compilam sem erros |
-| 2 | Conceitos de DDD, SOLID e Clean Code | ✅ Concluído | Clean Architecture (Domain, Application, Infrastructure, API), entidades ricas, injeção de dependência, SRP |
-| 3 | API .NET com CRUD de criar PEDIDO | ✅ Concluído | `POST /api/pedidos`, `GET`, `PUT`, `DELETE` em `PedidosController` |
-| 4 | Teste unitário back-end (mínimo GET Pedido) | ✅ Concluído | 32 testes xUnit + Moq (Controller + Service) cobrindo GET, POST, PUT, DELETE |
-| 5 | Migration SQL funcionando no projeto | ✅ Concluído | `InitialCreate` migration com EF Core — tabelas Pedidos e ItensPedido |
-| 6 | Swagger implementado e funcionando | ✅ Concluído | Disponível em `/swagger` com documentação completa |
-| 7 | GET PEDIDO retorna JSON no modelo especificado | ✅ Concluído | `PedidoDTO` retorna: id, nomeCliente, emailCliente, pago, valorTotal (soma qty × valor), itensPedido[] |
-| 8 | Projeto publicado em repositório GIT | ✅ Concluído | GitHub: `github.com/diogenesb6/CrudPedidos` |
-
-### 🌟 DESEJÁVEL (Diferencial)
-
-| # | Requisito | Status | Evidência |
-|---|-----------|--------|-----------|
-| 1 | Arquivo README com informações sobre a aplicação | ✅ Concluído | README completo com arquitetura, setup, endpoints, schema DB |
-| 2 | Front-end com integrações e comportamentos básicos | ✅ Concluído | React 19 + TypeScript + Vite — CRUD completo integrado via Fetch API |
-| 3 | API e Front-end publicada em Cloud | ⏳ Opcional | Não deployado em Azure/AWS/Heroku |
-| 4 | Banco de dados no Docker Compose | ✅ Concluído | `docker-compose.yml` com SQL Server 2022, API .NET 10, Frontend Nginx — healthcheck + migrations automáticas |
-| 5 | Design Patterns | ✅ Concluído | Repository Pattern, Service Layer, DTO Pattern, Dependency Injection, Factory (DesignTimeDbContextFactory) |
+| Funcionalidade | Descricao |
+|----------------|-----------|
+| **Listagem de Pedidos** | Tabela com dados, badges de status, acoes inline |
+| **Toggle Paid/Unpaid** | Clique no badge para alternar o status de pagamento |
+| **Criar Pedido** | Formulario com adicao/remocao dinamica de itens |
+| **Editar Pedido** | Carrega dados existentes e atualiza incluindo itens |
+| **Deletar Pedido** | Botao inline na listagem com confirmacao |
+| **Detalhes do Pedido** | Visualizacao completa com lista de itens e subtotais |
 
 ---
 
-## 📌 PRÓXIMOS PASSOS
+## Design Patterns
 
-### Fase 1: Backend (Prioridade Alta) ✅ CONCLUÍDA
-- [x] Criar entidades `Pedido` e `ItemPedido` em `CrudPedidos.Domain`
-- [x] Criar DTOs em `CrudPedidos.Application`
-- [x] Criar interfaces de repositório em `CrudPedidos.Domain`
-- [x] Implementar DbContext em `CrudPedidos.Infrastructure`
-- [x] Criar migrations
-- [x] Implementar repositórios concretos
-- [x] Criar serviços de aplicação
-- [x] Criar controllers e endpoints
-- [x] Configurar Swagger
-- [x] Implementar validações
-- [x] Criar testes unitários completos (32 testes - Controller + Service)
-
-### Fase 2: Frontend (Prioridade Alta) ✅ CONCLUÍDA
-- [x] Criar estrutura base React 19 com TypeScript e Vite
-- [x] Criar serviço Fetch API para comunicação com backend
-- [x] Criar componente de listagem (PedidoList)
-- [x] Criar formulário de CRUD (PedidoForm) com itens dinâmicos
-- [x] Implementar React Router v7 (rotas: /, /pedidos/novo, /pedidos/:id)
-- [x] Integrar todos os 5 endpoints CRUD
-- [x] Adicionar validações HTML5 nos formulários
-- [x] Styling com CSS puro
-- [x] Configurar proxy Vite e CORS no backend
-
-### Fase 3: Infraestrutura (Prioridade Média) ✅ CONCLUÍDA
-- [x] Criar Dockerfile para API (multi-stage build .NET 10)
-- [x] Criar Dockerfile para Frontend (Node 22 + Nginx)
-- [x] Criar docker-compose.yml (API + Frontend + SQL Server 2022)
-- [x] Configurar nginx.conf (SPA routing + proxy reverso)
-- [x] Configurar healthcheck e migration automática
-- [x] Criar .dockerignore (API + Frontend)
-- [ ] (Opcional) Deploy em cloud
-
-### Fase 4: Qualidade (Prioridade Média)
-- [ ] Testes unitários completos (backend)
-- [ ] Testes de integração
-- [ ] Testes e2e (frontend)
-- [ ] Code review e refatoração
-- [ ] Documentação final
+| Pattern | Onde |
+|---------|-----|
+| **Clean Architecture** | Separacao em Domain, Application, Infrastructure, API |
+| **Repository Pattern** | `IOrderRepository` / `OrderRepository` |
+| **Service Layer** | `IOrderService` / `OrderService` |
+| **DTO Pattern** | `CreateOrderDTO`, `UpdateOrderDTO`, `OrderDTO` |
+| **Dependency Injection** | `ServiceCollectionExtensions` |
+| **Factory** | `DesignTimeDbContextFactory` |
 
 ---
 
-## 👤 Contribuição
+## Contribuicao
 
-As contribuições são bem-vindas! Por favor:
-
-1. Faça um **fork** do projeto
-2. Crie uma **branch** para sua feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** suas mudanças (`git commit -m 'Add AmazingFeature'`)
-4. **Push** para a branch (`git push origin feature/AmazingFeature`)
+1. Faca um **fork** do projeto
+2. Crie uma **branch** para sua feature (`git checkout -b feature/NovaFeature`)
+3. **Commit** suas mudancas (`git commit -m 'Add NovaFeature'`)
+4. **Push** para a branch (`git push origin feature/NovaFeature`)
 5. Abra um **Pull Request**
 
 ---
 
-## 📄 Licença
+## Licenca
 
-Este projeto está licenciado sob a **MIT License** - veja o arquivo `LICENSE` para detalhes.
+Este projeto esta licenciado sob a **MIT License**.
 
 ---
 
-## 📞 Contato
+## Contato
 
 - **GitHub**: [@diogenesb6](https://github.com/diogenesb6)
-- **Repositório**: [CrudPedidos](https://github.com/diogenesb6/CrudPedidos)
+- **Repositorio**: [CrudOrders](https://github.com/diogenesb6/CrudPedidos)
 
 ---
 
-## 📚 Referências e Recursos
+## Referencias
 
-- [Clean Architecture by Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [Clean Architecture - Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [Domain-Driven Design](https://martinfowler.com/bliki/DomainDrivenDesign.html)
-- [SOLID Principles](https://en.wikipedia.org/wiki/SOLID)
 - [.NET Documentation](https://docs.microsoft.com/en-us/dotnet/)
 - [React Documentation](https://react.dev/)
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
 - [xUnit.net](https://xunit.net/)
-
----
-
-**Última atualização**: 2025  
-**Status**: ✅ Fase 1 Backend | ✅ Fase 2 Frontend | ✅ Fase 3 Docker | 🚀 Pronto para Fase 4 (Qualidade)
